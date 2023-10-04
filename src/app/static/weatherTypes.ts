@@ -1,16 +1,16 @@
-import { WiDaySunny, WiNightClear, WiNa } from "react-icons/wi";
+import { WiDaySunny, WiNightClear, WiNa } from 'react-icons/wi';
 
 export const weatherTypes = (weatherCode: number) => {
   switch (weatherCode) {
     case 0:
       return {
-        weather: "Clear sky",
+        weather: 'Clear sky',
         iconDay: WiDaySunny,
         iconNight: WiNightClear,
       };
     default:
       return {
-        weather: "Unknown",
+        weather: 'Unknown',
         iconDay: WiNa,
         iconNight: WiNa,
       };
