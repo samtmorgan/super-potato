@@ -1,17 +1,21 @@
-import { useAppContext } from '@/context/AppContext';
+import React from 'react';
+// import { useAppContext } from '@/context/AppContext';
+import { LocationInput } from './LocationInput';
+import { WeatherReadout } from './WeatherReadout';
 
 export default function PageContent() {
-  const { loading, coords } = useAppContext();
-  console.log(loading);
+  //   const { loading, coords } = useAppContext();
   return (
     <div>
-      <h1>Page Content:{`${loading}`}</h1>
+      {/* Page Content:
+        {`${loading}`} */}
+      <LocationInput />
+      <WeatherReadout />
     </div>
   );
 }
 
-{
-  /* <div>
+/* <div>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full active:bg-blue-800 "
               onClick={getLocation}
@@ -41,4 +45,3 @@ export default function PageContent() {
               </p>
             )}
           </div> */
-}
