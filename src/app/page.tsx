@@ -6,7 +6,9 @@ export default function Home() {
   const [lat, setLat] = useState<number | null>(null);
   const [lng, setLng] = useState<number | null>(null);
   const [status, setStatus] = useState<string | null>(null);
-  const [weather, setWeather] = useState<object | null>(null);
+  const [weather, setWeather] = useState<{
+    current_weather: { temperature: number };
+  } | null>(null);
 
   const getLocation = () => {
     console.log("clicked");
