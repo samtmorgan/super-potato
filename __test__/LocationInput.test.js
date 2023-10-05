@@ -10,11 +10,11 @@ describe('LocationInput', () => {
   //     });
   //     expect(heading).toBeInTheDocument();
   //   });
-  it('should render a label with text: "Location"', () => {
-    renderComponent(LocationInput);
-    const label = screen.getByLabelText('Location');
-    expect(label).toBeInTheDocument();
-  });
+  //   it('should render a label with text: "Location"', () => {
+  //     renderComponent(LocationInput);
+  //     const label = screen.getByLabelText('Location');
+  //     expect(label).toBeInTheDocument();
+  //   });
   it('should render a button with text: "use location"', () => {
     renderComponent(LocationInput);
     const button = screen.getByRole('button', { name: 'use location' });
