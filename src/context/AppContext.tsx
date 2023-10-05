@@ -1,4 +1,5 @@
 import { IContextType, ICoords, IWeather, IWeatherAssets } from '@/types/types';
+import { parseAddress } from '@/utils/locationHandler';
 import { getWeatherAssets } from '@/utils/weatherTypes';
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
@@ -95,9 +96,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
         throw new Error('You have an error');
       })
       .then(object => {
-        const res = object.results.find((result: { types: string[] }) => {
-          return result.types.includes('postal_code_prefix');
-        }).formatted_address;
+        const res = parseAddress(object);
         console.log(res);
         setAddress(res);
         // setWeather(object);
