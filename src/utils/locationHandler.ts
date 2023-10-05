@@ -3,5 +3,5 @@ export function parseAddress(object: any): string {
     return result.types.includes('postal_code_prefix');
   }).formatted_address;
 
-  return res ? res : '';
+  return res;
 }
