@@ -1,5 +1,6 @@
+import { ERROR, LOADING, SUCCESS } from '@/constants/addressStatus';
 import { useAppContext } from '@/context/AppContext';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const NOT_INITIALIZED = 'NOT_INITIALIZED';
 const PENDING = 'PENDING';
@@ -8,36 +9,41 @@ const GRANTED = 'GRANTED';
 const NOT_SUPPORTED = 'NOT_SUPPORTED';
 
 export function LocationInput() {
-  const { setCoords, address } = useAppContext();
-  const [input, setInput] = useState<string | null>(null);
+  const { setCoords, address, setWeatherStatus, resetState } = useAppContext();
+  //   const [input, setInput] = useState<string | null>(null);
   const [locationStatus, setLocationStatus] = useState<string>(NOT_INITIALIZED);
 
   const getLocation = () => {
+    resetState();
+    setWeatherStatus(LOADING);
     if (!navigator.geolocation) {
+      setWeatherStatus(ERROR);
       setLocationStatus(NOT_SUPPORTED);
     } else {
       setLocationStatus(PENDING);
       navigator.geolocation.getCurrentPosition(
         position => {
           setLocationStatus(GRANTED);
+          setWeatherStatus(SUCCESS);
           setCoords({ lat: position.coords.latitude, lng: position.coords.longitude });
         },
         () => {
+          setWeatherStatus(ERROR);
           setLocationStatus(DENIED);
         },
       );
     }
   };
 
-  useEffect(() => {
-    if (!input) return undefined;
-    return undefined;
-  }, [input]);
+  //   useEffect(() => {
+  //     if (!input) return undefined;
+  //     return undefined;
+  //   }, [input]);
 
   return (
     <form>
       {/* <h1>Location Input</h1> */}
-      <label htmlFor="location">
+      {/* <label htmlFor="location">
         Location
         <input
           className="p-2 hover:bg-pink-200 focus:bg-pink-100 outline-none"
@@ -50,7 +56,7 @@ export function LocationInput() {
             setInput(e.target.value);
           }}
         />
-      </label>
+      </label> */}
       <button
         type="button"
         disabled={locationStatus === PENDING}

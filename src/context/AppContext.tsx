@@ -1,16 +1,18 @@
+import { ERROR, LOADING, NOT_INIT, SUCCESS } from '@/constants/addressStatus';
 import { IContextType, ICoords, IWeather, IWeatherAssets } from '@/types/types';
 import { parseAddress } from '@/utils/locationHandler';
 import { getWeatherAssets } from '@/utils/weatherTypes';
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 const AppContext = createContext<IContextType>({
   coords: null,
   setCoords: () => {},
-  loading: true,
   weather: null,
   weatherAssets: null,
   address: null,
-  error: false,
+  weatherStatus: NOT_INIT,
+  setWeatherStatus: () => {},
+  resetState: () => {},
 });
 
 const useAppContext = () => {
@@ -28,22 +30,35 @@ const weatherApiOpts = '&current_weather=true&hourly=temperature_2m,relativehumi
 
 const googleKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
 
+const googleApiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+const googleApiKeySegment = `&key=${googleKey}`;
+
 function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [coords, setCoords] = useState<ICoords | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  //   const [loading, setLoading] = useState<boolean>(true);
   const [weather, setWeather] = useState<IWeather | null>(null);
-  const [error, setError] = useState<boolean>(false);
+  //   const [error, setError] = useState<boolean>(false);
   const [weatherAssets, setWeatherAssets] = useState<IWeatherAssets | null>(null);
   const [address, setAddress] = useState<string | null>(null);
+  const [weatherStatus, setWeatherStatus] = useState<string>(NOT_INIT);
+  const [addressStatus, setAddressStatus] = useState(NOT_INIT);
+
+  const resetState = useCallback(() => {
+    setCoords(null);
+    setWeather(null);
+    setWeatherAssets(null);
+    setAddress(null);
+    setWeatherStatus(NOT_INIT);
+  }, [setCoords, setWeather, setWeatherAssets, setAddress, setWeatherStatus]);
 
   const contextValue = useMemo(
-    () => ({ coords, setCoords, loading, weather, weatherAssets, address, error }),
-    [coords, setCoords, loading, weather, weatherAssets, address, error],
+    () => ({ coords, setCoords, weather, weatherAssets, address, weatherStatus, setWeatherStatus, resetState }),
+    [coords, setCoords, weather, weatherAssets, address, weatherStatus, setWeatherStatus, resetState],
   );
 
   useEffect(() => {
     if (!coords) return;
-
+    setWeatherStatus(LOADING);
     const url = `${weatherApiUrl}${weatherApiLat}${coords.lat}${weatherApiLng}${coords.lng}${weatherApiOpts}`;
     fetch(url)
       .then(res => {
@@ -51,16 +66,20 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
           return res.json();
         }
         if (res.status === 404) {
-          setError(true);
+          // setError(true);
+          setWeatherStatus(ERROR);
         }
-        setError(true);
+        //   setError(true);
+        setWeatherStatus(ERROR);
         throw new Error('You have an error');
       })
       .then(object => {
         // console.log(object);
         setWeather(object);
-        setError(false);
-        setLoading(false);
+        setWeatherStatus(ERROR);
+
+        // setError(false);
+        // setLoading(false);
       });
     //   .catch(error => console.log(error));
   }, [coords]);
@@ -81,30 +100,28 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const override = false;
+    // const override = true;
+
     if (!coords || override) return;
 
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${googleKey}`;
-    fetch(url)
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        if (res.status === 404) {
-          //   setError(true);
-        }
-        // setError(true);
-        throw new Error('You have an error');
-      })
-      .then(object => {
-        const res = parseAddress(object);
-        console.log(res);
+    const getLocation = async () => {
+      let locationData;
+
+      try {
+        const url = `${googleApiUrl}${coords.lat},${coords.lng}${googleApiKeySegment}`;
+        const res = await fetch(url);
+        locationData = await res.json();
+        setAddressStatus(SUCCESS);
+      } catch (error) {
+        setAddressStatus(ERROR);
+      }
+      if (locationData.status === 'OK') {
+        const res = parseAddress(locationData);
         setAddress(res);
-        // setWeather(object);
-        // setError(true);
-        // setLoading(false);
-      });
-    //   .catch(error => console.log(error));
-  }, [coords]);
+      }
+    };
+    getLocation();
+  }, [coords, addressStatus]);
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
 }

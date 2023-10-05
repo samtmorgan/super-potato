@@ -8,11 +8,12 @@ export interface ICoords {
 export interface IContextType {
   coords: ICoords | null;
   setCoords: (coords: ICoords) => void;
-  loading: boolean;
   weather: IWeather | null;
   weatherAssets: IWeatherAssets | null;
   address: string | null;
-  error: boolean;
+  weatherStatus: string;
+  setWeatherStatus: (status: string) => void;
+  resetState: () => void;
 }
 
 export interface IWeather {
