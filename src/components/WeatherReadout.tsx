@@ -12,7 +12,8 @@ export function WeatherReadout() {
       </p>
       <p>
         Weather:
-        {weatherAssets ? weatherAssets.text : `loading...`} {weatherAssets ? <weatherAssets.icon size="4em" /> : null}
+        {weatherAssets ? weatherAssets.text : `loading...`}
+        {weatherAssets ? <weatherAssets.icon size="4em" /> : null}
       </p>
     </article>
   );

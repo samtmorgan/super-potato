@@ -1,27 +1,6 @@
-import { IWeatherAssets, getWeatherAssets } from '@/static/weatherTypes';
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-
-interface ICoords {
-  lat: number | null;
-  lng: number | null;
-}
-
-interface IContextType {
-  coords: ICoords | null;
-  setCoords: (coords: ICoords) => void;
-  loading: boolean;
-  weather: IWeather | null;
-  weatherAssets: IWeatherAssets | null;
-  address: string | null;
-}
-
-interface IWeather {
-  current_weather: {
-    temperature: number;
-    weathercode: number;
-    is_day: number;
-  };
-}
+import { IContextType, ICoords, IWeather, IWeatherAssets } from '@/types/types';
+import { getWeatherAssets } from '@/utils/weatherTypes';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 const AppContext = createContext<IContextType>({
   coords: null,
@@ -30,6 +9,7 @@ const AppContext = createContext<IContextType>({
   weather: null,
   weatherAssets: null,
   address: null,
+  error: false,
 });
 
 const useAppContext = () => {
@@ -56,8 +36,8 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [address, setAddress] = useState<string | null>(null);
 
   const contextValue = useMemo(
-    () => ({ coords, setCoords, loading, weather, weatherAssets, address }),
-    [coords, setCoords, loading, weather, weatherAssets, address],
+    () => ({ coords, setCoords, loading, weather, weatherAssets, address, error }),
+    [coords, setCoords, loading, weather, weatherAssets, address, error],
   );
 
   useEffect(() => {
@@ -76,7 +56,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
         throw new Error('You have an error');
       })
       .then(object => {
-        console.log(object);
+        // console.log(object);
         setWeather(object);
         setError(false);
         setLoading(false);
@@ -89,7 +69,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       const weatherCode = weather?.current_weather?.weathercode;
       const isDay = weather?.current_weather?.is_day;
       //   if (weatherCode && isDay) {
-      console.log('should get weather');
+      //   console.log('should get weather');
       const assets = getWeatherAssets(weatherCode, isDay);
       setWeatherAssets(assets);
       //   }

@@ -1,5 +1,5 @@
 import { useAppContext } from '@/context/AppContext';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const NOT_INITIALIZED = 'NOT_INITIALIZED';
 const PENDING = 'PENDING';
@@ -28,6 +28,11 @@ export function LocationInput() {
       );
     }
   };
+
+  useEffect(() => {
+    if (!input) return undefined;
+    return undefined;
+  }, [input]);
 
   return (
     <form>
