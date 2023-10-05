@@ -98,8 +98,8 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
         const res = object.results.find((result: { types: string[] }) => {
           return result.types.includes('postal_code_prefix');
         }).formatted_address;
-        // console.log(res);
-        setAddress(res);
+        console.log(res);
+        setAddress(object);
         // setWeather(object);
         // setError(true);
         // setLoading(false);
