@@ -11,8 +11,10 @@ export interface IContextType {
   weather: IWeather | null;
   weatherAssets: IWeatherAssets | null;
   address: string | null;
-  weatherStatus: string;
-  setWeatherStatus: (status: string) => void;
+  weatherStatus: WeatherStatus;
+  setWeatherStatus: (status: WeatherStatus) => void;
+  locationStatus: LocationStatus;
+  setLocationStatus: (status: LocationStatus) => void;
   resetState: () => void;
 }
 
@@ -24,7 +26,14 @@ export interface IWeather {
   };
 }
 
-export interface IWeatherAssets {
+export type WeatherAssetsStatic = {
   text: string;
   icon: IconType;
+};
+
+export interface IWeatherAssets extends WeatherAssetsStatic {
+  temperature: number;
 }
+
+export type WeatherStatus = 'NOT_INITIALIZED' | 'LOADING' | 'SUCCESS' | 'ERROR';
+export type LocationStatus = 'NOT_INITIALIZED' | 'LOADING' | 'DENIED' | 'GRANTED' | 'NOT_SUPPORTED';

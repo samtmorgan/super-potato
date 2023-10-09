@@ -1,7 +1,7 @@
-import { ERROR, LOADING, NOT_INIT, SUCCESS } from '@/constants/addressStatus';
-import { IContextType, ICoords, IWeather, IWeatherAssets } from '@/types/types';
+import { ERROR, LOADING, NOT_INITIALIZED, SUCCESS } from '@/constants/statuses';
+import { IContextType, ICoords, IWeather, IWeatherAssets, LocationStatus, WeatherStatus } from '@/types/types';
 import { parseAddress } from '@/utils/locationHandler';
-import { getWeatherAssets } from '@/utils/weatherTypes';
+import { getWeatherAssets } from '@/utils/weatherAssets';
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 const AppContext = createContext<IContextType>({
@@ -10,8 +10,10 @@ const AppContext = createContext<IContextType>({
   weather: null,
   weatherAssets: null,
   address: null,
-  weatherStatus: NOT_INIT,
+  weatherStatus: NOT_INITIALIZED,
   setWeatherStatus: () => {},
+  locationStatus: NOT_INITIALIZED,
+  setLocationStatus: () => {},
   resetState: () => {},
 });
 
@@ -40,20 +42,45 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   //   const [error, setError] = useState<boolean>(false);
   const [weatherAssets, setWeatherAssets] = useState<IWeatherAssets | null>(null);
   const [address, setAddress] = useState<string | null>(null);
-  const [weatherStatus, setWeatherStatus] = useState<string>(NOT_INIT);
-  const [addressStatus, setAddressStatus] = useState(NOT_INIT);
+  const [weatherStatus, setWeatherStatus] = useState<WeatherStatus>(NOT_INITIALIZED);
+  const [addressStatus, setAddressStatus] = useState(NOT_INITIALIZED);
+  const [locationStatus, setLocationStatus] = useState<LocationStatus>(NOT_INITIALIZED);
 
   const resetState = useCallback(() => {
     setCoords(null);
     setWeather(null);
     setWeatherAssets(null);
     setAddress(null);
-    setWeatherStatus(NOT_INIT);
+    setWeatherStatus(NOT_INITIALIZED);
+    setAddressStatus(NOT_INITIALIZED);
+    setLocationStatus(NOT_INITIALIZED);
   }, [setCoords, setWeather, setWeatherAssets, setAddress, setWeatherStatus]);
 
   const contextValue = useMemo(
-    () => ({ coords, setCoords, weather, weatherAssets, address, weatherStatus, setWeatherStatus, resetState }),
-    [coords, setCoords, weather, weatherAssets, address, weatherStatus, setWeatherStatus, resetState],
+    () => ({
+      coords,
+      setCoords,
+      weather,
+      weatherAssets,
+      address,
+      weatherStatus,
+      setWeatherStatus,
+      resetState,
+      locationStatus,
+      setLocationStatus,
+    }),
+    [
+      coords,
+      setCoords,
+      weather,
+      weatherAssets,
+      address,
+      weatherStatus,
+      setWeatherStatus,
+      resetState,
+      locationStatus,
+      setLocationStatus,
+    ],
   );
 
   useEffect(() => {
@@ -91,6 +118,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       //   if (weatherCode && isDay) {
       //   console.log('should get weather');
       const assets = getWeatherAssets(weatherCode, isDay);
+      assets.temperature = weather.current_weather.temperature;
       setWeatherAssets(assets);
       //   }
       //   const assets = getWeatherAssets(weather.current_weather.weathercode, weather.current_weather.is_day);
