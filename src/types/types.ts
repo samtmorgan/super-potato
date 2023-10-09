@@ -31,6 +31,12 @@ export type WeatherAssetsStatic = {
   icon: IconType;
 };
 
+// export interface IWeatherAssets {
+//     temperature: number;
+//     text: string;
+//     icon: IconType;
+//   }
+
 export interface IWeatherAssets extends WeatherAssetsStatic {
   temperature: number;
 }

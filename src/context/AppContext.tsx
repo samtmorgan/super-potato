@@ -118,8 +118,11 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       //   if (weatherCode && isDay) {
       //   console.log('should get weather');
       const assets = getWeatherAssets(weatherCode, isDay);
-      assets.temperature = weather.current_weather.temperature;
-      setWeatherAssets(assets);
+      //   assets.temperature = weather.current_weather.temperature;
+      setWeatherAssets({
+        ...assets,
+        temperature: weather.current_weather.temperature,
+      });
       //   }
       //   const assets = getWeatherAssets(weather.current_weather.weathercode, weather.current_weather.is_day);
       //   setWeatherAssets(assets);
