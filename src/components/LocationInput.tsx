@@ -1,17 +1,12 @@
-import { ERROR, LOADING, SUCCESS } from '@/constants/addressStatus';
+import { locationStatusMessages } from '@/constants/copy';
+import { DENIED, ERROR, GRANTED, LOADING, NOT_SUPPORTED, SUCCESS } from '@/constants/statuses';
 import { useAppContext } from '@/context/AppContext';
-import React, { useState } from 'react';
-
-const NOT_INITIALIZED = 'NOT_INITIALIZED';
-const PENDING = 'PENDING';
-const DENIED = 'DENIED';
-const GRANTED = 'GRANTED';
-const NOT_SUPPORTED = 'NOT_SUPPORTED';
+import React from 'react';
 
 export function LocationInput() {
-  const { setCoords, address, setWeatherStatus, resetState } = useAppContext();
+  const { setCoords, address, setWeatherStatus, resetState, locationStatus, setLocationStatus } = useAppContext();
   //   const [input, setInput] = useState<string | null>(null);
-  const [locationStatus, setLocationStatus] = useState<string>(NOT_INITIALIZED);
+  //   const [locationStatus, setLocationStatus] = useState<string>(NOT_INITIALIZED);
 
   const getLocation = () => {
     resetState();
@@ -20,7 +15,7 @@ export function LocationInput() {
       setWeatherStatus(ERROR);
       setLocationStatus(NOT_SUPPORTED);
     } else {
-      setLocationStatus(PENDING);
+      setLocationStatus(LOADING);
       navigator.geolocation.getCurrentPosition(
         position => {
           setLocationStatus(GRANTED);
@@ -59,7 +54,7 @@ export function LocationInput() {
       </label> */}
       <button
         type="button"
-        disabled={locationStatus === PENDING}
+        disabled={locationStatus === LOADING}
         className="p-2 bg-pink-500 disabled:bg-pink-300 text-white 
         hover:bg-pink-600 active:bg-pink-700 focus:outline-none focus:ring 
         focus:ring-pink-300"
@@ -68,6 +63,7 @@ export function LocationInput() {
         use location
       </button>
       {address && address}
+      {locationStatus === DENIED && <p>{locationStatusMessages[locationStatus]}</p>}
       {/* location status:
       {locationStatus} */}
     </form>

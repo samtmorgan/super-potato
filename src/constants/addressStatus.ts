@@ -1,6 +1,0 @@
-const NOT_INIT = 'NOT_INIT';
-const LOADING = 'LOADING';
-const SUCCESS = 'SUCCESS';
-const ERROR = 'ERROR';
-
-export { NOT_INIT, LOADING, SUCCESS, ERROR };

@@ -1,4 +1,4 @@
-import { IWeatherAssets } from '@/types/types';
+import { WeatherAssetsStatic } from '@/types/types';
 import {
   WiDaySunny,
   WiNightClear,
@@ -17,7 +17,7 @@ import {
   WiNightAltCloudy,
 } from 'react-icons/wi';
 
-export const getWeatherAssets = (weatherCode: number, isDay: number): IWeatherAssets => {
+export const getWeatherAssets = (weatherCode: number, isDay: number): WeatherAssetsStatic => {
   if (weatherCode === 0) {
     return {
       text: 'Clear sky',
