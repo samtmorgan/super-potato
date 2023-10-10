@@ -2,14 +2,14 @@
 
 ## 🎯 Goal
 
-This project was created to get some more experience with Next.js and Tailwind CSS. It is a simple weather app that shows the current weather. The data is fetched from the [OpenWeatherMap API](https://openweathermap.org/api).
+This project was created with the aim to gain additional experience with Next.js, Tailwind CSS and other tool. It is a simple weather app that shows the current weather. The data is fetched from the [OpenWeatherMap API](https://openweathermap.org/api).
 Geocoding is currently done with the [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview).
 
 ## 📝 Planned Features
 
 - [ ] 5 day forecast
 - [ ] 16 day forecast
-- [ ] Geocoding with OpenStreetMap
+- [ ] Migrate to alternative geocoding service
 - [ ] Reverse geocoding
 - [ ] Text field location search as alternative to geolocation API
 - [ ] Climate change impact data
@@ -19,10 +19,16 @@ Geocoding is currently done with the [Google Maps Geocoding API](https://develop
 - [ ] Dark mode
 - [ ] Image of the current weather
 
+## Developer Experience improvements
+
+- [✔] Add ESLint
+- [✔] Add Prettier
+- [ ] Add Husky
+
 ## 🛠️ Built with
 
-![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white&style=for-the-badge)
 ![Next](https://img.shields.io/badge/-Next-000000?logo=next.js&logoColor=white&style=for-the-badge)
+![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white&style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-007ACC?logo=typescript&logoColor=white&style=for-the-badge)
 ![Tailwind](https://img.shields.io/badge/-Tailwind-38B2AC?logo=tailwind-css&logoColor=white&style=for-the-badge)
 
