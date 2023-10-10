@@ -2,14 +2,16 @@
 
 ## 🎯 Goal
 
-This project was created with the aim to gain additional experience with Next.js, Tailwind CSS and other tool. It is a simple weather app that shows the current weather. The data is fetched from the [OpenWeatherMap API](https://openweathermap.org/api).
-Geocoding is currently done with the [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview).
+- This project was created with the aim to gain additional experience with Next.js, Tailwind CSS and other tools.
+- It is a simple weather app that (for now) just shows the current weather.
+- The data is fetched from the [Open-Meteo API](https://open-meteo.com/).
+- Geocoding is currently done with the [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview).
 
 ## 📝 Planned Features
 
 - [ ] 5 day forecast
 - [ ] 16 day forecast
-- [ ] Migrate to alternative geocoding service
+- [ ] Migrate to open source geocoding API
 - [ ] Reverse geocoding
 - [ ] Text field location search as alternative to geolocation API
 - [ ] Climate change impact data
@@ -19,13 +21,13 @@ Geocoding is currently done with the [Google Maps Geocoding API](https://develop
 - [ ] Dark mode
 - [ ] Image of the current weather
 
-## Developer Experience improvements
+## 🦅 Developer Experience improvements
 
-- [✔] Add ESLint
-- [✔] Add Prettier
+- [x] Add ESLint
+- [x] Add Prettier
 - [ ] Add Husky
 
-## 🛠️ Built with
+## 🛠️ Built with..
 
 ![Next](https://img.shields.io/badge/-Next-000000?logo=next.js&logoColor=white&style=for-the-badge)
 ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white&style=for-the-badge)
@@ -33,3 +35,7 @@ Geocoding is currently done with the [Google Maps Geocoding API](https://develop
 ![Tailwind](https://img.shields.io/badge/-Tailwind-38B2AC?logo=tailwind-css&logoColor=white&style=for-the-badge)
 
 Deployed on ![Vercel](https://img.shields.io/badge/-Vercel-000000?logo=vercel&logoColor=white&style=for-the-badge)
+
+## 🥔 Why super potato?
+
+🥔 I would like to take credit for such a great name but it is in fact a GitHub suggestion. Whilst not very descriptive, for the sake brevity, I stuck with it. 🥔
