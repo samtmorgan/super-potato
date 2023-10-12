@@ -24,20 +24,21 @@ export const getWeatherAssets = (weatherCode: number, isDay: number): WeatherAss
     return {
       text: 'Clear sky',
       icon: isDay ? WiDaySunny : WiNightClear,
+      weatherSearchTerm: 'clear&sun&sky',
     };
   }
   if (weatherCode === 1 || weatherCode === 2 || weatherCode === 3) {
     return {
       text: 'Mainly clear, partly cloudy, and overcast',
       icon: isDay ? WiDayCloudy : WiNightAltCloudy,
-      weatherSearchTerm: 'clear',
+      weatherSearchTerm: 'clouds&sky',
     };
   }
   if (weatherCode === 45 || weatherCode === 48) {
     return {
       text: 'Fog and depositing rime fog',
       icon: isDay ? WiDayFog : WiNightFog,
-      weatherSearchTerm: 'fog',
+      weatherSearchTerm: 'fog&forest',
     };
   }
   if (weatherCode === 51 || weatherCode === 53 || weatherCode === 55) {

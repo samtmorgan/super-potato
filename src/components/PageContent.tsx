@@ -1,18 +1,27 @@
 import React from 'react';
-// import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/AppContext';
 import { LocationInput } from './LocationInput';
 import { WeatherReadout } from './WeatherReadout';
-// import { WeatherImage } from './WeatherImage';
+import { WeatherImage } from './WeatherImage';
 
 export default function PageContent() {
-  //   const { loading, coords } = useAppContext();
+  const { weatherAssets } = useAppContext();
   return (
     <div>
       {/* Page Content:
         {`${loading}`} */}
       <LocationInput />
       <WeatherReadout />
-      {/* <WeatherImage weatherSearchTerm="sunny" /> */}
+      {/* <WeatherImage weatherSearchTerm={'sky'} /> */}
+      {/* <WeatherImage weatherSearchTerm={'cloud'} /> */}
+      <WeatherImage weatherSearchTerm={'haze'} />
+      {/* <WeatherImage weatherSearchTerm={'rain'} /> */}
+      {/* <WeatherImage weatherSearchTerm={'heavy&rain'} /> */}
+      {/* <WeatherImage weatherSearchTerm={'rain&showers'} /> */}
+      {/* <WeatherImage weatherSearchTerm={'snow'} /> */}
+      {/* <WeatherImage weatherSearchTerm={'thunderstorm'} />  */}
+
+      {/* <WeatherImage weatherSearchTerm={weatherAssets?.weatherSearchTerm || 'sunny'} /> */}
     </div>
   );
 }
