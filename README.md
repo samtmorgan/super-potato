@@ -23,9 +23,9 @@
 
 ## 🦅 Developer Experience improvements
 
-- [x] Add ESLint
-- [x] Add Prettier
-- [ ] Add Husky
+- [x] ESLint
+- [x] Prettier
+- [ ] Husky
 
 ## 🛠️ Built with..
 
@@ -38,4 +38,4 @@ Deployed on ![Vercel](https://img.shields.io/badge/-Vercel-000000?logo=vercel&lo
 
 ## 🥔 Why super potato?
 
-🥔 I would like to take credit for such a great name but it is in fact a GitHub suggestion. Whilst not very descriptive, for the sake brevity, I stuck with it. 🥔
+🥔 I would like to take credit for such a great name but it is in fact a GitHub suggestion 🙏. Whilst not very descriptive, for the sake brevity, I stuck with it and now quite like it. 🥔

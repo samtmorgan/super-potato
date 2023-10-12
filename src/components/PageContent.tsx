@@ -2,6 +2,7 @@ import React from 'react';
 // import { useAppContext } from '@/context/AppContext';
 import { LocationInput } from './LocationInput';
 import { WeatherReadout } from './WeatherReadout';
+// import { WeatherImage } from './WeatherImage';
 
 export default function PageContent() {
   //   const { loading, coords } = useAppContext();
@@ -11,6 +12,7 @@ export default function PageContent() {
         {`${loading}`} */}
       <LocationInput />
       <WeatherReadout />
+      {/* <WeatherImage weatherSearchTerm="sunny" /> */}
     </div>
   );
 }
