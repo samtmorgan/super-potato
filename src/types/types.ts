@@ -29,6 +29,7 @@ export interface IWeather {
 export type WeatherAssetsStatic = {
   text: string;
   icon: IconType;
+  weatherSearchTerm?: string;
 };
 
 // export interface IWeatherAssets {

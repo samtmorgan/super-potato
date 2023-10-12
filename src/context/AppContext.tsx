@@ -101,7 +101,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
         throw new Error('You have an error');
       })
       .then(object => {
-        // console.log(object);
+        console.log(object);
         setWeather(object);
         setWeatherStatus(ERROR);
 
