@@ -2,57 +2,44 @@ import React from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { LocationInput } from './LocationInput';
 import { WeatherReadout } from './WeatherReadout';
-import { WeatherImage } from './WeatherImage';
+// import { WeatherImage } from './WeatherImage';
 
 export default function PageContent() {
-  const { weatherAssets } = useAppContext();
+  const { address, weatherAssets } = useAppContext();
+  //  backdrop-blur-sm bg-white/30
   return (
-    <div>
-      {/* Page Content:
-        {`${loading}`} */}
-      <LocationInput />
-      <WeatherReadout />
-      {/* <WeatherImage weatherSearchTerm={'sky'} /> */}
-      {/* <WeatherImage weatherSearchTerm={'cloud'} /> */}
-      <WeatherImage weatherSearchTerm={'haze'} />
-      {/* <WeatherImage weatherSearchTerm={'rain'} /> */}
-      {/* <WeatherImage weatherSearchTerm={'heavy&rain'} /> */}
-      {/* <WeatherImage weatherSearchTerm={'rain&showers'} /> */}
-      {/* <WeatherImage weatherSearchTerm={'snow'} /> */}
-      {/* <WeatherImage weatherSearchTerm={'thunderstorm'} />  */}
-
-      {/* <WeatherImage weatherSearchTerm={weatherAssets?.weatherSearchTerm || 'sunny'} /> */}
-    </div>
+    <main
+      className="
+    flex-col
+    flex
+    items-center
+    justify-center
+    w-screen 
+    h-screen
+    bg-gradient-to-tr
+    from-sky-300 to-indigo-50"
+    >
+      <div
+        className="p-10 
+      
+      backdrop-hue-rotate-40
+       flex-col flex items-center font-sans text-sm text-gray-900 "
+      >
+        {address && weatherAssets && (
+          <>
+            <LocationInput />
+            <section
+              className={`font-light h-20 
+          text-5xl flex justify-items-center
+          items-center`}
+            >
+              {address || ''}
+            </section>
+            <WeatherReadout />
+            {/* <WeatherImage weatherSearchTerm={weatherAssets?.weatherSearchTerm || 'sunny'} /> */}
+          </>
+        )}
+      </div>
+    </main>
   );
 }
-
-/* <div>
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full active:bg-blue-800 "
-              onClick={getLocation}
-              type="button"
-            >
-              Get Location
-            </button>
-            <h1>Coordinates</h1>
-            <p>{status}</p>
-            {lat && (
-              <p>
-                Latitude:
-                {lat}
-              </p>
-            )}
-            {lng && (
-              <p>
-                Longitude:
-                {lng}
-              </p>
-            )}
-            {weather && (
-              <p>
-                Temperature:
-                {weather.current_weather.temperature}
-                °C
-              </p>
-            )}
-          </div> */

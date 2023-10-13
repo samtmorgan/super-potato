@@ -1,7 +1,9 @@
-import { locationStatusMessages } from '@/constants/copy';
-import { DENIED, ERROR, GRANTED, LOADING, NOT_SUPPORTED, SUCCESS } from '@/constants/statuses';
+// import { locationStatusMessages } from '@/constants/copy';
+import { DENIED, ERROR, LOADING, NOT_SUPPORTED, SUCCESS } from '@/constants/statuses';
 import { useAppContext } from '@/context/AppContext';
 import React from 'react';
+import { FaLocationArrow } from 'react-icons/fa';
+import { Tooltip } from './ToolTip';
 
 export function LocationInput() {
   const { setCoords, address, setWeatherStatus, resetState, locationStatus, setLocationStatus } = useAppContext();
@@ -18,7 +20,7 @@ export function LocationInput() {
       setLocationStatus(LOADING);
       navigator.geolocation.getCurrentPosition(
         position => {
-          setLocationStatus(GRANTED);
+          setLocationStatus(SUCCESS);
           setWeatherStatus(SUCCESS);
           setCoords({ lat: position.coords.latitude, lng: position.coords.longitude });
         },
@@ -36,7 +38,7 @@ export function LocationInput() {
   //   }, [input]);
 
   return (
-    <form>
+    <form className="h-10">
       {/* <h1>Location Input</h1> */}
       {/* <label htmlFor="location">
         Location
@@ -52,18 +54,34 @@ export function LocationInput() {
           }}
         />
       </label> */}
-      <button
-        type="button"
-        disabled={locationStatus === LOADING}
-        className="p-2 bg-pink-500 disabled:bg-pink-300 text-white 
-        hover:bg-pink-600 active:bg-pink-700 focus:outline-none focus:ring 
-        focus:ring-pink-300"
-        onClick={getLocation}
-      >
-        use location
-      </button>
-      {address && address}
-      {locationStatus === DENIED && <p>{locationStatusMessages[locationStatus]}</p>}
+      <Tooltip message="Use current location">
+        <button
+          type="button"
+          disabled={locationStatus === LOADING}
+          // className="p-2 bg-pink-500 disabled:bg-pink-300 text-white
+          // hover:bg-pink-600 active:bg-pink-700 focus:outline-none focus:ring
+          // focus:ring-pink-300"
+          className="
+        flex justify-center items-center
+        h-10
+        w-10
+        p-2 
+        disabled:text-gray-500 
+        rounded 
+        outline-sky-200
+        hover:bg
+        hover:bg-sky-300/50 
+        hover:disabled:bg-transparent 
+        border-transparent"
+          onClick={getLocation}
+        >
+          {/* use location */}
+          <FaLocationArrow />
+        </button>
+      </Tooltip>
+
+      {/* {address && address}
+      {locationStatus === DENIED && <p>{locationStatusMessages[locationStatus]}</p>} */}
       {/* location status:
       {locationStatus} */}
     </form>

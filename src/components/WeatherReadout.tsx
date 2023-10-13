@@ -1,30 +1,39 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useAppContext } from '@/context/AppContext';
-import { getWeatherReadoutMessage } from '@/constants/copy';
-import { DENIED } from '@/constants/statuses';
+import { resolveWeatherIcon } from '@/utils/weatherAssets';
 
 export function WeatherReadout() {
-  const { weatherAssets, weatherStatus, locationStatus } = useAppContext();
+  const { weatherAssets } = useAppContext();
 
-  if (locationStatus === DENIED) return null;
+  // memorize the assets which we will render
+  const assets = useMemo(() => {
+    if (!weatherAssets) {
+      return null;
+    }
+    const temp = weatherAssets?.current?.temp || null;
+    const Icon = resolveWeatherIcon(weatherAssets.current.iconCode);
+    if (temp) {
+      return { temp, Icon };
+    }
+    return null;
+  }, [weatherAssets]);
 
   return (
-    <article>
-      {weatherAssets ? (
+    <section
+      className={`font-regular h-24 w-full 
+    text-4xl flex justify-items-center items-center justify-center
+    `}
+    >
+      {assets ? (
         <>
-          <p>
-            Temperature:
-            {`${weatherAssets.temperature}°C`}
+          <p className="flex items-end ">
+            <assets.Icon className="" size="5rem" />
           </p>
-          <p>
-            Weather:
-            {weatherAssets.text}
-            <weatherAssets.icon size="4em" />
-          </p>
+          <p className="mr-5">{assets.temp}</p>
         </>
       ) : (
-        <p>{getWeatherReadoutMessage(weatherStatus)}</p>
+        <p />
       )}
-    </article>
+    </section>
   );
 }
