@@ -15,7 +15,7 @@ export interface IContextType {
   setWeatherStatus: (status: WeatherStatus) => void;
   locationStatus: LocationStatus;
   setLocationStatus: (status: LocationStatus) => void;
-  resetState: () => void;
+  //   resetState: () => void;
 }
 
 export interface IWeather {
