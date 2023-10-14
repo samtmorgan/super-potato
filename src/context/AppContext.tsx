@@ -1,8 +1,7 @@
-import { ERROR, LOADING, NOT_INITIALIZED, SUCCESS } from '@/constants/statuses';
-import { IContextType, ICoords, IWeather, IWeatherAssets, LocationStatus, WeatherStatus } from '@/types/types';
-import { parseAddress } from '@/utils/locationHandler';
-import { getWeatherAssets } from '@/utils/weatherAssets';
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { LOADING, NOT_INITIALIZED } from '@/constants/statuses';
+import { IContextType, ICoords, IWeather, LocationStatus, Weather, WeatherStatus } from '@/types/types';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { getIpGeo, getReverseGeocode, getWeather1 } from '../api/api';
 
 const AppContext = createContext<IContextType>({
   coords: null,
@@ -14,7 +13,7 @@ const AppContext = createContext<IContextType>({
   setWeatherStatus: () => {},
   locationStatus: NOT_INITIALIZED,
   setLocationStatus: () => {},
-  resetState: () => {},
+  //   resetState: () => {},
 });
 
 const useAppContext = () => {
@@ -25,36 +24,16 @@ const useAppContext = () => {
   return context;
 };
 
-const weatherApiUrl = 'https://api.open-meteo.com/v1/';
-const weatherApiLat = 'forecast?latitude=';
-const weatherApiLng = '&longitude=';
-const weatherApiOpts = '&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m';
-
-const googleKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
-
-const googleApiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-const googleApiKeySegment = `&key=${googleKey}`;
-
 function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [coords, setCoords] = useState<ICoords | null>(null);
   //   const [loading, setLoading] = useState<boolean>(true);
   const [weather, setWeather] = useState<IWeather | null>(null);
   //   const [error, setError] = useState<boolean>(false);
-  const [weatherAssets, setWeatherAssets] = useState<IWeatherAssets | null>(null);
+  const [weatherAssets, setWeatherAssets] = useState<Weather | null>(null);
   const [address, setAddress] = useState<string | null>(null);
   const [weatherStatus, setWeatherStatus] = useState<WeatherStatus>(NOT_INITIALIZED);
   const [addressStatus, setAddressStatus] = useState(NOT_INITIALIZED);
   const [locationStatus, setLocationStatus] = useState<LocationStatus>(NOT_INITIALIZED);
-
-  const resetState = useCallback(() => {
-    setCoords(null);
-    setWeather(null);
-    setWeatherAssets(null);
-    setAddress(null);
-    setWeatherStatus(NOT_INITIALIZED);
-    setAddressStatus(NOT_INITIALIZED);
-    setLocationStatus(NOT_INITIALIZED);
-  }, [setCoords, setWeather, setWeatherAssets, setAddress, setWeatherStatus]);
 
   const contextValue = useMemo(
     () => ({
@@ -63,9 +42,9 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       weather,
       weatherAssets,
       address,
+      addressStatus,
       weatherStatus,
       setWeatherStatus,
-      resetState,
       locationStatus,
       setLocationStatus,
     }),
@@ -75,84 +54,32 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       weather,
       weatherAssets,
       address,
+      addressStatus,
       weatherStatus,
       setWeatherStatus,
-      resetState,
       locationStatus,
       setLocationStatus,
     ],
   );
 
+  // Get the coordinates from the IP
+  useEffect(() => {
+    getIpGeo(setCoords, setLocationStatus);
+  }, []);
+
+  // Get location text with coordinates
+  useEffect(() => {
+    if (coords) {
+      getReverseGeocode(coords.lng, coords.lat, setAddress, setAddressStatus);
+    }
+  }, [coords]);
+
+  // If we have coords to work with, retrieve the weather data and assets
   useEffect(() => {
     if (!coords) return;
     setWeatherStatus(LOADING);
-    const url = `${weatherApiUrl}${weatherApiLat}${coords.lat}${weatherApiLng}${coords.lng}${weatherApiOpts}`;
-    fetch(url)
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        if (res.status === 404) {
-          // setError(true);
-          setWeatherStatus(ERROR);
-        }
-        //   setError(true);
-        setWeatherStatus(ERROR);
-        throw new Error('You have an error');
-      })
-      .then(object => {
-        console.log(object);
-        setWeather(object);
-        setWeatherStatus(ERROR);
-
-        // setError(false);
-        // setLoading(false);
-      });
-    //   .catch(error => console.log(error));
+    getWeather1(coords, setWeather, setWeatherStatus, setWeatherAssets);
   }, [coords]);
-
-  useEffect(() => {
-    if (weather) {
-      const weatherCode = weather?.current_weather?.weathercode;
-      const isDay = weather?.current_weather?.is_day;
-      //   if (weatherCode && isDay) {
-      //   console.log('should get weather');
-      const assets = getWeatherAssets(weatherCode, isDay);
-      //   assets.temperature = weather.current_weather.temperature;
-      setWeatherAssets({
-        ...assets,
-        temperature: weather.current_weather.temperature,
-      });
-      //   }
-      //   const assets = getWeatherAssets(weather.current_weather.weathercode, weather.current_weather.is_day);
-      //   setWeatherAssets(assets);
-    }
-  }, [weather]);
-
-  useEffect(() => {
-    const override = false;
-    // const override = true;
-
-    if (!coords || override) return;
-
-    const getLocation = async () => {
-      let locationData;
-
-      try {
-        const url = `${googleApiUrl}${coords.lat},${coords.lng}${googleApiKeySegment}`;
-        const res = await fetch(url);
-        locationData = await res.json();
-        setAddressStatus(SUCCESS);
-      } catch (error) {
-        setAddressStatus(ERROR);
-      }
-      if (locationData.status === 'OK') {
-        const res = parseAddress(locationData);
-        setAddress(res);
-      }
-    };
-    getLocation();
-  }, [coords, addressStatus]);
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
 }
