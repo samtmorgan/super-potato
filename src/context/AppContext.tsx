@@ -13,7 +13,7 @@ const AppContext = createContext<IContextType>({
   setWeatherStatus: () => {},
   locationStatus: NOT_INITIALIZED,
   setLocationStatus: () => {},
-  resetState: () => {},
+  //   resetState: () => {},
 });
 
 const useAppContext = () => {
