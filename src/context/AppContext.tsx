@@ -1,6 +1,6 @@
 import { LOADING, NOT_INITIALIZED } from '@/constants/statuses';
 import { IContextType, ICoords, IWeather, LocationStatus, Weather, WeatherStatus } from '@/types/types';
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { getIpGeo, getReverseGeocode, getWeather1 } from '../api/api';
 
 const AppContext = createContext<IContextType>({
@@ -35,16 +35,21 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [addressStatus, setAddressStatus] = useState(NOT_INITIALIZED);
   const [locationStatus, setLocationStatus] = useState<LocationStatus>(NOT_INITIALIZED);
 
-  const resetState = useCallback(() => {
-    // setCoords(null);
-    // setWeather(null);
-    // setWeatherAssets(null);
-    // setAddress(null);
-    // setWeatherStatus(NOT_INITIALIZED);
-    // setAddressStatus(NOT_INITIALIZED);
-    // setLocationStatus(NOT_INITIALIZED);
+  //   const resetState = useCallback(() => {
+  // setCoords(null);
+  // setWeather(null);
+  // setWeatherAssets(null);
+  // setAddress(null);
+  // setWeatherStatus(NOT_INITIALIZED);
+  // setAddressStatus(NOT_INITIALIZED);
+  // setLocationStatus(NOT_INITIALIZED);
+  // return null;
+  //   }, [
+  //   setCoords, setWeather, setWeatherAssets, setAddress, setWeatherStatus
+  //   ]);
+  const resetState = useMemo(() => {
     return null;
-  }, [setCoords, setWeather, setWeatherAssets, setAddress, setWeatherStatus]);
+  }, []);
 
   const contextValue = useMemo(
     () => ({

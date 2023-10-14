@@ -1,5 +1,5 @@
 import { ERROR, NOT_INITIALIZED, SUCCESS } from '@/constants/statuses';
-import { resolveWeatherIcon } from '@/utils/weatherAssets';
+// import { resolveWeatherIcon } from '@/utils/weatherAssets';
 import { ApiStatus, ICoords, IWeather, LocationStatus, Weather } from '../types/types';
 
 const protocol = 'https://';

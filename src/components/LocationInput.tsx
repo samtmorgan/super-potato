@@ -2,16 +2,16 @@
 import { DENIED, ERROR, LOADING, NOT_SUPPORTED, SUCCESS } from '@/constants/statuses';
 import { useAppContext } from '@/context/AppContext';
 import React from 'react';
-import { FaLocationArrow } from 'react-icons/fa';
-import { Tooltip } from './ToolTip';
+import { LiaLocationArrowSolid } from 'react-icons/lia';
+import { Tooltip } from './Tooltip';
 
 export function LocationInput() {
-  const { setCoords, address, setWeatherStatus, resetState, locationStatus, setLocationStatus } = useAppContext();
+  const { setCoords, setWeatherStatus, locationStatus, setLocationStatus } = useAppContext();
   //   const [input, setInput] = useState<string | null>(null);
   //   const [locationStatus, setLocationStatus] = useState<string>(NOT_INITIALIZED);
 
   const getLocation = () => {
-    resetState();
+    // resetState();
     setWeatherStatus(LOADING);
     if (!navigator.geolocation) {
       setWeatherStatus(ERROR);
@@ -38,7 +38,7 @@ export function LocationInput() {
   //   }, [input]);
 
   return (
-    <form className="h-10">
+    <form className="w-full h-10 flex justify-end">
       {/* <h1>Location Input</h1> */}
       {/* <label htmlFor="location">
         Location
@@ -66,17 +66,19 @@ export function LocationInput() {
         h-10
         w-10
         p-2 
-        disabled:text-gray-500 
-        rounded 
+        disabled:text-slategray-500 
         outline-sky-200
-        hover:bg
-        hover:bg-sky-300/50 
+        hover:border-2
+        hover:bg-slate-300/30 
         hover:disabled:bg-transparent 
-        border-transparent"
+
+        border-gray-800
+        border
+        "
           onClick={getLocation}
         >
           {/* use location */}
-          <FaLocationArrow />
+          <LiaLocationArrowSolid />
         </button>
       </Tooltip>
 
