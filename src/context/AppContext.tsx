@@ -35,22 +35,6 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [addressStatus, setAddressStatus] = useState(NOT_INITIALIZED);
   const [locationStatus, setLocationStatus] = useState<LocationStatus>(NOT_INITIALIZED);
 
-  //   const resetState = useCallback(() => {
-  // setCoords(null);
-  // setWeather(null);
-  // setWeatherAssets(null);
-  // setAddress(null);
-  // setWeatherStatus(NOT_INITIALIZED);
-  // setAddressStatus(NOT_INITIALIZED);
-  // setLocationStatus(NOT_INITIALIZED);
-  // return null;
-  //   }, [
-  //   setCoords, setWeather, setWeatherAssets, setAddress, setWeatherStatus
-  //   ]);
-  const resetState = useMemo(() => {
-    return null;
-  }, []);
-
   const contextValue = useMemo(
     () => ({
       coords,
@@ -61,7 +45,6 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       addressStatus,
       weatherStatus,
       setWeatherStatus,
-      resetState,
       locationStatus,
       setLocationStatus,
     }),
@@ -74,7 +57,6 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       addressStatus,
       weatherStatus,
       setWeatherStatus,
-      resetState,
       locationStatus,
       setLocationStatus,
     ],
