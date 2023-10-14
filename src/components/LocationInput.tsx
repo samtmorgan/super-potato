@@ -38,7 +38,7 @@ export function LocationInput() {
   //   }, [input]);
 
   return (
-    <form className="w-full h-10 flex justify-end">
+    <form className="w-full h-14 flex justify-end">
       {/* <h1>Location Input</h1> */}
       {/* <label htmlFor="location">
         Location
