@@ -20,6 +20,7 @@ export function WeatherReadout() {
 
   return (
     <section
+      aria-label="Current weather conditions"
       className={`font-regular h-24 w-full 
     text-4xl flex justify-items-center items-center justify-center
     `}
