@@ -1,6 +1,6 @@
 import { ERROR, IP, NOT_INITIALIZED, SUCCESS } from '@/constants/statuses';
 // import { resolveWeatherIcon } from '@/utils/weatherAssets';
-import { ApiStatus, ICoords, IWeather, LocationStatus, Weather } from '../types/types';
+import { AddressStatus, ApiStatus, ICoords, IWeather, LocationStatus, Weather } from '../types/types';
 
 const protocol = 'https://';
 
@@ -58,15 +58,12 @@ export async function getReverseGeocode(
   lng: number,
   lat: number,
   setState: (data: string) => void,
-  setStatus: (status: LocationStatus) => void,
+  setStatus: (status: AddressStatus) => void,
   //   type: 'district' | 'postcode' = 'district',
 ) {
   const host = 'api.mapbox.com/';
   const path = 'geocoding/v5/mapbox.places/';
   const coords = `${lng},${lat}.json?`;
-  //   const types = `types=${type}&`;
-  //   const types = `types=locality&`;
-  //   const types = `types=place&`;
   const types = `types=locality&`;
 
   const key = `access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
@@ -75,15 +72,7 @@ export async function getReverseGeocode(
   try {
     const res = await fetch(url);
     const result = await res.json();
-    // tidy up the address data
-    // const start = result.features[0].place_name.split(',')[0];
-    // const end = result.features[0].place_name.split(',').at(-1).trimStart();
-    // //   making sure we don't repeat the same value
-    // const addressStr = start === end ? start : `${start}, ${end === 'United Kingdom' ? 'UK' : end}`;
-    // console.log({ result });
-    // setState(addressStr);
     setState(result.features[0].text);
-
     setStatus(SUCCESS);
   } catch (error) {
     setStatus(NOT_INITIALIZED);
