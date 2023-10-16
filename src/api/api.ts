@@ -1,4 +1,4 @@
-import { ERROR, NOT_INITIALIZED, SUCCESS } from '@/constants/statuses';
+import { ERROR, IP, NOT_INITIALIZED, SUCCESS } from '@/constants/statuses';
 // import { resolveWeatherIcon } from '@/utils/weatherAssets';
 import { ApiStatus, ICoords, IWeather, LocationStatus, Weather } from '../types/types';
 
@@ -97,7 +97,7 @@ export async function getIpGeo(setState: (data: ICoords) => void, setStatus: (st
   try {
     const res = await fetch(url);
     const result = await res.json();
-    setState({ lat: result.latitude, lng: result.longitude });
+    setState({ lat: result.latitude, lng: result.longitude, coordsType: IP });
     setStatus(SUCCESS);
   } catch (error) {
     setStatus(NOT_INITIALIZED);

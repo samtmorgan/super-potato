@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { resolveWeatherIcon } from '@/utils/weatherAssets';
 
-export function WeatherReadout() {
+export function CurrentWeather() {
   const { weatherAssets } = useAppContext();
 
   // memorize the assets which we will render
@@ -28,7 +28,7 @@ export function WeatherReadout() {
       {assets ? (
         <>
           <p className="flex items-end ">
-            <assets.Icon className="" size="5rem" />
+            <assets.Icon size="5rem" />
           </p>
           <p className="mr-5">{assets.temp}</p>
         </>

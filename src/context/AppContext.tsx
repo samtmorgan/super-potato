@@ -1,5 +1,5 @@
 import { LOADING, NOT_INITIALIZED } from '@/constants/statuses';
-import { IContextType, ICoords, IWeather, LocationStatus, Weather, WeatherStatus } from '@/types/types';
+import { AddressStatus, IContextType, ICoords, IWeather, LocationStatus, Weather, WeatherStatus } from '@/types/types';
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { getIpGeo, getReverseGeocode, getWeather1 } from '../api/api';
 
@@ -12,6 +12,7 @@ const AppContext = createContext<IContextType>({
   weatherStatus: NOT_INITIALIZED,
   setWeatherStatus: () => {},
   locationStatus: NOT_INITIALIZED,
+  addressStatus: NOT_INITIALIZED,
   setLocationStatus: () => {},
   //   resetState: () => {},
 });
@@ -31,8 +32,9 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   //   const [error, setError] = useState<boolean>(false);
   const [weatherAssets, setWeatherAssets] = useState<Weather | null>(null);
   const [address, setAddress] = useState<string | null>(null);
+
   const [weatherStatus, setWeatherStatus] = useState<WeatherStatus>(NOT_INITIALIZED);
-  const [addressStatus, setAddressStatus] = useState(NOT_INITIALIZED);
+  const [addressStatus, setAddressStatus] = useState<AddressStatus>(NOT_INITIALIZED);
   const [locationStatus, setLocationStatus] = useState<LocationStatus>(NOT_INITIALIZED);
 
   const contextValue = useMemo(
