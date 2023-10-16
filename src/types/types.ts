@@ -3,6 +3,7 @@ import { IconType } from 'react-icons';
 export interface ICoords {
   lat: number;
   lng: number;
+  coordsType: CoordsType;
 }
 
 export interface IContextType {
@@ -11,6 +12,7 @@ export interface IContextType {
   weather: IWeather | null;
   weatherAssets: Weather | null;
   address: string | null;
+  addressStatus: AddressStatus;
   weatherStatus: WeatherStatus;
   setWeatherStatus: (status: WeatherStatus) => void;
   locationStatus: LocationStatus;
@@ -72,6 +74,8 @@ export interface IWeatherAssets extends WeatherAssetsStatic {
 export type WeatherStatus = 'NOT_INITIALIZED' | 'LOADING' | 'SUCCESS' | 'ERROR';
 export type LocationStatus = 'NOT_INITIALIZED' | 'LOADING' | 'DENIED' | 'SUCCESS' | 'NOT_SUPPORTED';
 export type ApiStatus = 'NOT_INITIALIZED' | 'LOADING' | 'SUCCESS' | 'ERROR';
+export type AddressStatus = 'NOT_INITIALIZED' | 'LOADING' | 'SUCCESS' | 'ERROR';
+export type CoordsType = 'NOT_INITIALIZED' | 'IP' | 'BROWSER' | 'GEOCODED';
 
 export type apiRequest<DataType> = {
   url: string;

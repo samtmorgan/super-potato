@@ -1,9 +1,9 @@
 import { screen } from '@testing-library/react';
-import { LocationInput } from '../src/components/LocationInput';
+import { LocationInput } from '../src/components/input/LocationInput';
 import '@testing-library/jest-dom';
 import { renderComponent } from './utils/renderComponent';
 
-describe('LocationInput', () => {
+describe('Location', () => {
   //   it(`should render heading: ${nameHeading}`, () => {
   //     const heading = screen.getByRole('heading', {
   //       name: nameHeading,
@@ -11,12 +11,12 @@ describe('LocationInput', () => {
   //     expect(heading).toBeInTheDocument();
   //   });
   //   it('should render a label with text: "Location"', () => {
-  //     renderComponent(LocationInput);
+  //     renderComponent(Location);
   //     const label = screen.getByLabelText('Location');
   //     expect(label).toBeInTheDocument();
   //   });
   //   it('should render a button with text: "use location"', () => {
-  //     renderComponent(LocationInput);
+  //     renderComponent(Location);
   //     const button = screen.getByRole('button', { name: 'use location' });
   //     expect(button).toBeInTheDocument();
   //   });

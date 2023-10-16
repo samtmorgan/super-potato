@@ -11,15 +11,15 @@ export const WELCOME_MESSAGE = 'Welcome to Super Potato!';
 // export const FORGOT_PASSWORD_TEXT = 'Forgot Password?';
 export const ERROR_MESSAGE = 'Oops! Something went wrong. Please try again.';
 
-export const weatherReadoutMessages = {
+export const CurrentWeatherMessages = {
   [NOT_INITIALIZED]: 'Press use location to get the weather.',
   [LOADING]: 'Loading...',
   [SUCCESS]: 'The weather is currently',
   [ERROR]: 'Oops, there was a problem getting the weather, try again.',
 };
 
-export function getWeatherReadoutMessage(status: WeatherStatus) {
-  return weatherReadoutMessages[status];
+export function getCurrentWeatherMessage(status: WeatherStatus) {
+  return CurrentWeatherMessages[status];
 }
 
 export const locationStatusMessages = {
