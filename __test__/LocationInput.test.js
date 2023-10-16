@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { Location } from '../src/components/input/Location';
+import { LocationInput } from '../src/components/input/LocationInput';
 import '@testing-library/jest-dom';
 import { renderComponent } from './utils/renderComponent';
 
@@ -21,7 +21,7 @@ describe('Location', () => {
   //     expect(button).toBeInTheDocument();
   //   });
   it('should render a button with text', () => {
-    renderComponent(Location);
+    renderComponent(LocationInput);
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
   });
