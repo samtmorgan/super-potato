@@ -1,7 +1,6 @@
 'use client';
 
 import PageContent from '@/components/PageContent';
-import { LocationInput } from '@/components/input/LocationInput';
 import { AppContextProvider } from '@/context/AppContext';
 import React from 'react';
 
@@ -9,22 +8,19 @@ export default function Home() {
   return (
     <AppContextProvider>
       <main
-        className="flex-col flex items-center justify-center w-screen
-    h-screen bg-gradient-to-tr from-sky-300 to-indigo-50"
-      >
-        <div
-          className="p-10 
-        backdrop-hue-rotate-40
-        flex-col
+        className="
+        flex-col 
         flex 
         items-center 
+        justify-center 
+        w-screen
+        h-screen 
+        bg-gradient-to-tr from-sky-300 to-indigo-50 
         font-sans 
         text-sm 
-        text-gray-900"
-        >
-          <LocationInput />
-          <PageContent />
-        </div>
+        text-gray-90"
+      >
+        <PageContent />
       </main>
     </AppContextProvider>
   );

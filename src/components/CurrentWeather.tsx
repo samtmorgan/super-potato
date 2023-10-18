@@ -21,16 +21,21 @@ export function CurrentWeather() {
   return (
     <section
       aria-label="Current weather conditions"
-      className={`font-regular h-24 w-full 
-    text-4xl flex justify-items-center items-center justify-center
+      className={`
+        font-regular 
+        text-4xl 
+        flex 
+        items-center 
+        justify-center
+        gap-2
     `}
     >
       {assets ? (
         <>
-          <p className="flex items-end ">
+          <p className="flex items-end">
             <assets.Icon size="5rem" />
           </p>
-          <p className="mr-5">{assets.temp}</p>
+          <p>{assets.temp}</p>
         </>
       ) : (
         <p />

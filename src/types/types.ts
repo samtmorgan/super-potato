@@ -3,29 +3,30 @@ import { IconType } from 'react-icons';
 export interface ICoords {
   lat: number;
   lng: number;
-  coordsType: CoordsType;
 }
 
 export interface IContextType {
   coords: ICoords | null;
   setCoords: (coords: ICoords) => void;
-  weather: IWeather | null;
+  searchValue: string;
+  setSearchValue: (searchValue: string) => void;
   weatherAssets: Weather | null;
+  setWeatherAssets: (weatherAssets: Weather) => void;
   address: string | null;
+  setAddress: (address: string) => void;
   addressStatus: AddressStatus;
   weatherStatus: WeatherStatus;
   setWeatherStatus: (status: WeatherStatus) => void;
   locationStatus: LocationStatus;
   setLocationStatus: (status: LocationStatus) => void;
+  searchResults: SearchResult[] | null;
+  setSearchResults: (searchResults: SearchResult[] | null) => void;
 }
 
-export interface IWeather {
-  current_weather: {
-    temperature: number;
-    weathercode: number;
-    is_day: number;
-  };
-}
+export type SearchResult = {
+  text: string;
+  type: string;
+};
 
 export type Weather = {
   current: {
@@ -67,15 +68,21 @@ export type WeatherAssetsStatic = {
 //     icon: IconType;
 //   }
 
+export type Suggestion = {
+  name: string;
+  place_formatted: string;
+  feature_type: string;
+};
+
 export interface IWeatherAssets extends WeatherAssetsStatic {
   temperature: number;
 }
 
-export type WeatherStatus = 'NOT_INITIALIZED' | 'LOADING' | 'SUCCESS' | 'ERROR';
-export type LocationStatus = 'NOT_INITIALIZED' | 'LOADING' | 'DENIED' | 'SUCCESS' | 'NOT_SUPPORTED';
-export type ApiStatus = 'NOT_INITIALIZED' | 'LOADING' | 'SUCCESS' | 'ERROR';
-export type AddressStatus = 'NOT_INITIALIZED' | 'LOADING' | 'SUCCESS' | 'ERROR';
-export type CoordsType = 'NOT_INITIALIZED' | 'IP' | 'BROWSER' | 'GEOCODED';
+export type WeatherStatus = 'LOADING' | 'SUCCESS' | 'ERROR';
+export type LocationStatus = 'LOADING' | 'DENIED' | 'SUCCESS' | 'ERROR';
+export type ApiStatus = 'LOADING' | 'SUCCESS' | 'ERROR';
+export type AddressStatus = 'LOADING' | 'SUCCESS' | 'ERROR';
+export type CoordsType = 'LOADING' | 'IP' | 'BROWSER' | 'GEOCODED';
 
 export type apiRequest<DataType> = {
   url: string;

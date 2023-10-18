@@ -1,20 +1,32 @@
-import { LOADING, NOT_INITIALIZED } from '@/constants/statuses';
-import { AddressStatus, IContextType, ICoords, IWeather, LocationStatus, Weather, WeatherStatus } from '@/types/types';
+import { LOADING } from '@/constants/statuses';
+import {
+  AddressStatus,
+  IContextType,
+  ICoords,
+  LocationStatus,
+  SearchResult,
+  Weather,
+  WeatherStatus,
+} from '@/types/types';
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { getIpGeo, getReverseGeocode, getWeather1 } from '../api/api';
+import { getIpGeo, getReverseGeocode, getWeather } from '../api/api';
 
 const AppContext = createContext<IContextType>({
   coords: null,
   setCoords: () => {},
-  weather: null,
+  searchValue: '',
+  setSearchValue: () => {},
   weatherAssets: null,
+  setWeatherAssets: () => {},
   address: null,
-  weatherStatus: NOT_INITIALIZED,
+  setAddress: () => {},
+  weatherStatus: LOADING,
   setWeatherStatus: () => {},
-  locationStatus: NOT_INITIALIZED,
-  addressStatus: NOT_INITIALIZED,
+  locationStatus: LOADING,
+  addressStatus: LOADING,
   setLocationStatus: () => {},
-  //   resetState: () => {},
+  searchResults: null,
+  setSearchResults: () => {},
 });
 
 const useAppContext = () => {
@@ -27,33 +39,38 @@ const useAppContext = () => {
 
 function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [coords, setCoords] = useState<ICoords | null>(null);
-  //   const [loading, setLoading] = useState<boolean>(true);
-  const [weather, setWeather] = useState<IWeather | null>(null);
-  //   const [error, setError] = useState<boolean>(false);
   const [weatherAssets, setWeatherAssets] = useState<Weather | null>(null);
   const [address, setAddress] = useState<string | null>(null);
+  const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null);
+  const [searchValue, setSearchValue] = useState<string>('');
 
-  const [weatherStatus, setWeatherStatus] = useState<WeatherStatus>(NOT_INITIALIZED);
-  const [addressStatus, setAddressStatus] = useState<AddressStatus>(NOT_INITIALIZED);
-  const [locationStatus, setLocationStatus] = useState<LocationStatus>(NOT_INITIALIZED);
+  const [weatherStatus, setWeatherStatus] = useState<WeatherStatus>(LOADING);
+  const [addressStatus, setAddressStatus] = useState<AddressStatus>(LOADING);
+  const [locationStatus, setLocationStatus] = useState<LocationStatus>(LOADING);
 
   const contextValue = useMemo(
     () => ({
       coords,
       setCoords,
-      weather,
+      searchValue,
+      setSearchValue,
       weatherAssets,
+      setWeatherAssets,
       address,
+      setAddress,
       addressStatus,
       weatherStatus,
       setWeatherStatus,
       locationStatus,
       setLocationStatus,
+      searchResults,
+      setSearchResults,
     }),
     [
       coords,
       setCoords,
-      weather,
+      searchValue,
+      setSearchValue,
       weatherAssets,
       address,
       addressStatus,
@@ -61,6 +78,8 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       setWeatherStatus,
       locationStatus,
       setLocationStatus,
+      searchResults,
+      setSearchResults,
     ],
   );
 
@@ -80,7 +99,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!coords) return;
     setWeatherStatus(LOADING);
-    getWeather1(coords, setWeather, setWeatherStatus, setWeatherAssets);
+    getWeather(coords, setWeatherStatus, setWeatherAssets);
   }, [coords]);
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
