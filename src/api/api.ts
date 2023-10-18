@@ -1,30 +1,17 @@
-import { ERROR, IP, NOT_INITIALIZED, SUCCESS } from '@/constants/statuses';
-// import { resolveWeatherIcon } from '@/utils/weatherAssets';
-import { AddressStatus, ApiStatus, ICoords, IWeather, LocationStatus, Weather } from '../types/types';
+import { ERROR, IP, SUCCESS } from '@/constants/statuses';
+import { AddressStatus, ApiStatus, ICoords, LocationStatus, Weather, WeatherStatus } from '../types/types';
 
 const protocol = 'https://';
 
-// refactor this as pe the others...
-// gets the weather for the given
-export async function getWeather(
-  url: string,
-  setState: (data: IWeather) => void,
-  setStatus: (status: ApiStatus) => void,
-) {
-  try {
-    const res = await fetch(url);
-    const result = await res.json();
-    setState(result);
-    setStatus(SUCCESS);
-  } catch (error) {
-    setStatus(ERROR);
-  }
+function parseSearchText(text: string) {
+  const strArr = text.split(',');
+  //   return `${strArr[0]}, ${strArr.at(-1)}`;
+  return strArr[0];
 }
 
 // TODO: remove setWeather param
-export async function getWeather1(
+export async function getWeather(
   coords: ICoords,
-  setWeather: (data: IWeather) => void,
   setWeatherStatus: (status: ApiStatus) => void,
   setWeatherAssets: (weather: Weather) => void,
 ) {
@@ -34,11 +21,9 @@ export async function getWeather1(
   const units = `&units=metric`;
   const key = `&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_MAP_KEY}`;
   const url = protocol + host + path + coordinates + units + key;
-
   try {
     const res = await fetch(url);
     const result = await res.json();
-    // console.log({ result });
     const currentAssets: Weather = {
       current: {
         temp: `${result.current.temp.toFixed(0)}°c`,
@@ -53,7 +38,7 @@ export async function getWeather1(
   }
 }
 
-// Gets the reverse geocode -> an address from coordinates
+// Gets the an address from coordinates
 export async function getReverseGeocode(
   lng: number,
   lat: number,
@@ -61,21 +46,55 @@ export async function getReverseGeocode(
   setStatus: (status: AddressStatus) => void,
   //   type: 'district' | 'postcode' = 'district',
 ) {
+  // build the URL
   const host = 'api.mapbox.com/';
   const path = 'geocoding/v5/mapbox.places/';
   const coords = `${lng},${lat}.json?`;
-  const types = `types=locality&`;
-
+  const types = `types=place&`;
   const key = `access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
   const url = protocol + host + path + coords + types + key;
-
   try {
     const res = await fetch(url);
     const result = await res.json();
     setState(result.features[0].text);
     setStatus(SUCCESS);
   } catch (error) {
-    setStatus(NOT_INITIALIZED);
+    setStatus(ERROR);
+  }
+}
+
+// Gets the coordinates from an address
+export async function getWeatherForSearchResult(
+  searchText: string,
+  type: string,
+  setAddress: (newCoords: string) => void,
+  setWeatherAssets: (weather: Weather) => void,
+  setWeatherStatus: (status: WeatherStatus) => void,
+  setLocationStatus: (status: LocationStatus) => void,
+
+  //   type: 'district' | 'postcode' = 'district',
+) {
+  // build the URL
+  const host = 'api.mapbox.com/';
+  const path = 'geocoding/v5/mapbox.places/';
+  const search = `${searchText.replace(', ', '%20')}.json?`;
+  const key = `&access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
+  const types = `types=${type}`;
+  const url = protocol + host + path + search + types + key;
+  try {
+    const res = await fetch(url);
+    const result = await res.json();
+    const newCoords = {
+      lng: result.features[0].center[0],
+      lat: result.features[0].center[1],
+    };
+
+    const address = parseSearchText(searchText);
+    setAddress(address);
+    getWeather(newCoords, setWeatherStatus, setWeatherAssets);
+    setLocationStatus(SUCCESS);
+  } catch (error) {
+    setLocationStatus(ERROR);
   }
 }
 
@@ -89,6 +108,6 @@ export async function getIpGeo(setState: (data: ICoords) => void, setStatus: (st
     setState({ lat: result.latitude, lng: result.longitude, coordsType: IP });
     setStatus(SUCCESS);
   } catch (error) {
-    setStatus(NOT_INITIALIZED);
+    setStatus(ERROR);
   }
 }
