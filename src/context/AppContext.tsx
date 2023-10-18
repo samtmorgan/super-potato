@@ -1,5 +1,13 @@
 import { LOADING } from '@/constants/statuses';
-import { AddressStatus, IContextType, ICoords, LocationStatus, Weather, WeatherStatus } from '@/types/types';
+import {
+  AddressStatus,
+  IContextType,
+  ICoords,
+  LocationStatus,
+  SearchResult,
+  Weather,
+  WeatherStatus,
+} from '@/types/types';
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { getIpGeo, getReverseGeocode, getWeather } from '../api/api';
 
@@ -33,7 +41,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [coords, setCoords] = useState<ICoords | null>(null);
   const [weatherAssets, setWeatherAssets] = useState<Weather | null>(null);
   const [address, setAddress] = useState<string | null>(null);
-  const [searchResults, setSearchResults] = useState<string[] | null>(['here', 'there']);
+  const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null);
   const [searchValue, setSearchValue] = useState<string>('');
 
   const [weatherStatus, setWeatherStatus] = useState<WeatherStatus>(LOADING);
