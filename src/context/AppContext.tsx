@@ -20,7 +20,7 @@ const AppContext = createContext<IContextType>({
   setWeatherAssets: () => {},
   address: null,
   setAddress: () => {},
-  weatherStatus: false,
+  weatherStatus: LOADING,
   setWeatherStatus: () => {},
   locationStatus: LOADING,
   addressStatus: LOADING,
