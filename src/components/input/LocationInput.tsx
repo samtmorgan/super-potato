@@ -7,9 +7,10 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { v4 as uuidv4 } from 'uuid';
 import { Suggestion } from '@/types/types';
 
+const sessionId = uuidv4();
+
 function buildUrl(query: string): string {
   const protocol = 'https://';
-  const sessionId = uuidv4();
   const host = 'api.mapbox.com/';
   const path = 'search/searchbox/v1/suggest?';
   const q = `q=${query}`;
