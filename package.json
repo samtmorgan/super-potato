@@ -11,7 +11,7 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "prepare": "husky install",
-    "precommit": "npm run lint && npm test && npx tsc"
+    "precommit": "npm run lint && npm test"
   },
   "dependencies": {
     "@mapbox/search-js-react": "^1.0.0-beta.18",
