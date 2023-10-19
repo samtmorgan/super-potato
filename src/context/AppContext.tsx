@@ -23,7 +23,7 @@ const AppContext = createContext<IContextType>({
   weatherStatus: LOADING,
   setWeatherStatus: () => {},
   locationStatus: LOADING,
-  addressStatus: LOADING,
+  addressStatus: true,
   setLocationStatus: () => {},
   searchResults: null,
   setSearchResults: () => {},
