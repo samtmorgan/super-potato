@@ -71,7 +71,10 @@ describe('PageContent includes Alert component if alerts is not null', () => {
   test('Component renders if alerts !== null', () => {
     const providerProps = successProviderProps;
 
-    providerProps.value.weatherAssets = { current: providerProps.value.weatherAssets.current, alerts: [] };
+    providerProps.value.weatherAssets = {
+      current: providerProps.value.weatherAssets.current,
+      alerts: [{ event: 'yellow rain warning' }],
+    };
 
     renderWithContext(<PageContent />, { providerProps });
     const alerts = screen.getByTestId('alerts');
