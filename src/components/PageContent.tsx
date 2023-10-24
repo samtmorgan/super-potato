@@ -9,6 +9,7 @@ import { SearchResult } from '@/types/types';
 import { CurrentWeather } from './CurrentWeather';
 import { Location } from './Location';
 import { LocationInput } from './input/LocationInput';
+import { Alerts } from './Alerts';
 
 function ErrorComponent({ text }: { text: string }): React.ReactElement {
   return (
@@ -43,6 +44,10 @@ export function Content(): ReactElement | null {
   }, [locationStatus, addressStatus, weatherStatus]);
 
   const navigatorDenied = useMemo(() => locationStatus === DENIED, [locationStatus]);
+
+  const weatherAlerts = useMemo(() => weatherAssets?.alerts, [weatherAssets]);
+
+  //   const weatherAlerts = [{ event: 'bad weather' }];
 
   const handleClickSearchResult = useCallback(
     (searchResult: SearchResult) => {
@@ -115,10 +120,11 @@ export function Content(): ReactElement | null {
       <>
         <Location />
         <CurrentWeather />
+        {weatherAlerts && <Alerts alerts={weatherAlerts} />}
       </>
     );
   }
-  console.log({ address, weatherAssets });
+  //   console.log({ address, weatherAssets });
   return null;
 }
 
@@ -126,10 +132,13 @@ export default function PageContent() {
   return (
     <div
       className="
-        h-44
+        h-max
         w-full
         sm:w-80
         max-w-xs
+        items-center
+        flex
+        flex-col
     "
     >
       <LocationInput />

@@ -8,7 +8,7 @@ export function Location() {
     <section
       className="
         font-light 
-        min-h-[64px]
+        min-h-fit
         max-h-fit
         text-5xl 
         flex 
