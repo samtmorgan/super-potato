@@ -20,6 +20,24 @@ function ErrorComponent({ text }: { text: string }): React.ReactElement {
   );
 }
 
+export const mockAlerts = [
+  {
+    senderName: 'UK Met Office',
+    event: 'Yellow rain warning',
+    start: 1698318000,
+    end: 1698580800,
+    description: `Information on update: The warning has been extended as far west as the edge of Stirling,
+      and the likelihood of impacts has been increased. Further rain is expected across eastern
+      Scotland between late Thursday and early Sunday. The rain will be heavy in places, although
+      possibly easing off across the north of the warning areas for  a time later on Friday or
+      early Saturday. Accumulations over this period  will be widely around 30 to 50 mm across
+      lower ground, but with 50 to 100 mm falling over higher ground, where there is the possibility
+      of 120-160 mm in a few locations. For further details see
+      https://www.metoffice.gov.uk/weather/warnings-and-advice/uk-warnings`,
+    tags: ['Rain'],
+  },
+];
+
 export function Content(): ReactElement | null {
   const {
     locationStatus,
@@ -46,8 +64,8 @@ export function Content(): ReactElement | null {
   const navigatorDenied = useMemo(() => locationStatus === DENIED, [locationStatus]);
 
   const weatherAlerts = useMemo(() => weatherAssets?.alerts, [weatherAssets]);
-
-  //   const weatherAlerts = [{ event: 'bad weather' }];
+  // mocking the alerts for dev
+  //   const weatherAlerts = useMemo(() => mockAlerts, []);
 
   const handleClickSearchResult = useCallback(
     (searchResult: SearchResult) => {

@@ -32,7 +32,7 @@ export async function getWeather(
   try {
     const res = await fetch(url);
     const result = await res.json();
-    console.log(result);
+    //   build the current weather assets
     const currentAssets: Weather = {
       current: {
         temp: `${result.current.temp.toFixed(0)}°c`,
@@ -41,10 +41,11 @@ export async function getWeather(
       },
       alerts: null,
     };
+    //   if we have alerts add them to the context
     if (Object.hasOwn(result, 'alerts')) {
       const alerts = result.alerts.map(
-        ({ start, end, sender_name: senderName, event }: WeatherAlertApi): WeatherAlert => {
-          return { start, end, senderName, event };
+        ({ start, end, sender_name: senderName, event, description }: WeatherAlertApi): WeatherAlert => {
+          return { start, end, senderName, event, description };
         },
       );
       currentAssets.alerts = alerts.length > 0 ? alerts : null;

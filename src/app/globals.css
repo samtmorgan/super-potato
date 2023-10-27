@@ -17,16 +17,29 @@
 }
 
 body {
-  /* color: rgb(var(--foreground-rgb));*/
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding: 0; */
   height: 100vh;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  height: 50%;
+  margin: auto;
+  background-color: white;
+  border-radius: 0.5rem;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .modal {
+    width: 90%;
+    height: 90%;
+  }
 }

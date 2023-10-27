@@ -69,13 +69,13 @@ describe('PageContent component should render appropriate status dependent the v
 
 describe('PageContent includes Alert component if alerts is not null', () => {
   test('Component renders if alerts !== null', () => {
+    // setup the context values as if all API requests were successful
     const providerProps = successProviderProps;
-
+    // inject our test weather alert event
     providerProps.value.weatherAssets = {
       current: providerProps.value.weatherAssets.current,
       alerts: [{ event: 'yellow rain warning' }],
     };
-
     renderWithContext(<PageContent />, { providerProps });
     const alerts = screen.getByTestId('alerts');
     expect(alerts).toBeInTheDocument();
