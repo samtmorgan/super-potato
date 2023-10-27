@@ -2,18 +2,18 @@
 
 ## 🎯 Goal
 
-- This project was created with the aim to gain additional experience with Next.js, Tailwind CSS and other tools.
+- This project was created with the aim to gain additional experience with Next.js, Tailwind CSS, Git Hooks, Husky and other tools.
 - It is a simple weather app that (for now) just shows the current weather.
-- The data is fetched from the [Open-Meteo API](https://open-meteo.com/).
-- Geocoding is currently done with the [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview).
+- The weather data is fetched from the [Open Weather Map API](https://https://openweathermap.org/).
+- Geocoding and location search is done with the [Map Box API](https://www.mapbox.com/).
 
 ## 📝 Planned Features
 
 - [ ] 5 day forecast
 - [ ] 16 day forecast
-- [ ] Migrate to open source geocoding API
-- [ ] Reverse geocoding
-- [ ] Text field location search as alternative to geolocation API
+- [x] Reverse geocoding
+- [x] Text field location search as alternative to geolocation API
+- [x] Weather alerts
 - [ ] Climate change impact data
 - [ ] Hourly forecast including precipitation, wind, temperature, etc.
 - [ ] Map with the location of the searched city
@@ -25,7 +25,7 @@
 
 - [x] ESLint
 - [x] Prettier
-- [ ] Husky
+- [x] Husky
 
 ## 🛠️ Built with..
 
