@@ -34,6 +34,28 @@ export type Weather = {
     iconCode: WeatherIcon;
     text: string;
   };
+  alerts: WeatherAlert[] | null;
+};
+
+export type WeatherAlertApi = {
+  sender_name: string;
+  event: string;
+  start: number;
+  end: number;
+  description: string;
+};
+
+export type WeatherAlert = {
+  senderName: string;
+  event: string;
+  start: number;
+  end: number;
+  description: string;
+};
+
+export type WeatherTimeRangeType = {
+  start: number;
+  end: number;
 };
 
 export type WeatherIcon =
@@ -61,12 +83,6 @@ export type WeatherAssetsStatic = {
   icon: IconType;
   weatherSearchTerm?: string;
 };
-
-// export interface IWeatherAssets {
-//     temperature: number;
-//     text: string;
-//     icon: IconType;
-//   }
 
 export type Suggestion = {
   name: string;

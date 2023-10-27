@@ -9,6 +9,7 @@ import { SearchResult } from '@/types/types';
 import { CurrentWeather } from './CurrentWeather';
 import { Location } from './Location';
 import { LocationInput } from './input/LocationInput';
+import { Alerts } from './Alerts';
 
 function ErrorComponent({ text }: { text: string }): React.ReactElement {
   return (
@@ -18,6 +19,24 @@ function ErrorComponent({ text }: { text: string }): React.ReactElement {
     </div>
   );
 }
+
+export const mockAlerts = [
+  {
+    senderName: 'UK Met Office',
+    event: 'Yellow rain warning',
+    start: 1698318000,
+    end: 1698580800,
+    description: `Information on update: The warning has been extended as far west as the edge of Stirling,
+      and the likelihood of impacts has been increased. Further rain is expected across eastern
+      Scotland between late Thursday and early Sunday. The rain will be heavy in places, although
+      possibly easing off across the north of the warning areas for  a time later on Friday or
+      early Saturday. Accumulations over this period  will be widely around 30 to 50 mm across
+      lower ground, but with 50 to 100 mm falling over higher ground, where there is the possibility
+      of 120-160 mm in a few locations. For further details see
+      https://www.metoffice.gov.uk/weather/warnings-and-advice/uk-warnings`,
+    tags: ['Rain'],
+  },
+];
 
 export function Content(): ReactElement | null {
   const {
@@ -43,6 +62,10 @@ export function Content(): ReactElement | null {
   }, [locationStatus, addressStatus, weatherStatus]);
 
   const navigatorDenied = useMemo(() => locationStatus === DENIED, [locationStatus]);
+
+  const weatherAlerts = useMemo(() => weatherAssets?.alerts, [weatherAssets]);
+  // mocking the alerts for dev
+  //   const weatherAlerts = useMemo(() => mockAlerts, []);
 
   const handleClickSearchResult = useCallback(
     (searchResult: SearchResult) => {
@@ -115,10 +138,11 @@ export function Content(): ReactElement | null {
       <>
         <Location />
         <CurrentWeather />
+        {weatherAlerts && <Alerts alerts={weatherAlerts} />}
       </>
     );
   }
-  console.log({ address, weatherAssets });
+  //   console.log({ address, weatherAssets });
   return null;
 }
 
@@ -126,10 +150,13 @@ export default function PageContent() {
   return (
     <div
       className="
-        h-44
+        h-max
         w-full
         sm:w-80
         max-w-xs
+        items-center
+        flex
+        flex-col
     "
     >
       <LocationInput />

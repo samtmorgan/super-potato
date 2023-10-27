@@ -1,5 +1,14 @@
 import { ERROR, SUCCESS } from '@/constants/statuses';
-import { AddressStatus, ApiStatus, ICoords, LocationStatus, Weather, WeatherStatus } from '../types/types';
+import {
+  AddressStatus,
+  ApiStatus,
+  ICoords,
+  LocationStatus,
+  Weather,
+  WeatherAlert,
+  WeatherAlertApi,
+  WeatherStatus,
+} from '../types/types';
 
 const protocol = 'https://';
 
@@ -9,7 +18,6 @@ function parseSearchText(text: string) {
   return strArr[0];
 }
 
-// TODO: remove setWeather param
 export async function getWeather(
   coords: ICoords,
   setWeatherStatus: (status: ApiStatus) => void,
@@ -24,13 +32,24 @@ export async function getWeather(
   try {
     const res = await fetch(url);
     const result = await res.json();
+    //   build the current weather assets
     const currentAssets: Weather = {
       current: {
         temp: `${result.current.temp.toFixed(0)}°c`,
         iconCode: result.current.weather[0].icon,
         text: result.current.weather[0].description,
       },
+      alerts: null,
     };
+    //   if we have alerts add them to the context
+    if (Object.hasOwn(result, 'alerts')) {
+      const alerts = result.alerts.map(
+        ({ start, end, sender_name: senderName, event, description }: WeatherAlertApi): WeatherAlert => {
+          return { start, end, senderName, event, description };
+        },
+      );
+      currentAssets.alerts = alerts.length > 0 ? alerts : null;
+    }
     setWeatherAssets(currentAssets);
     setWeatherStatus(SUCCESS);
   } catch (error) {
