@@ -1,7 +1,6 @@
 import React, { ReactElement, memo, useState } from 'react';
 import { WeatherAlert, WeatherTimeRangeType } from '@/types/types';
 import { FiAlertTriangle } from 'react-icons/fi';
-// import Modal from 'react-modal';
 import format from 'date-fns/format';
 import { Modal } from './Modal';
 

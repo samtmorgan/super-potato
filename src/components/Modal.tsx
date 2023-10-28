@@ -1,6 +1,11 @@
 import { ModalType } from '@/types/types';
 import React, { ReactElement } from 'react';
 
+/*
+Modal code adapted from - 
+https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/react/modals/regular
+*/
+
 export function Modal({ open, onClose, title, body }: ModalType): ReactElement | null {
   if (!open) {
     return null;
