@@ -1,10 +1,21 @@
-import React, { memo, useState } from 'react';
+import React, { ReactElement, memo, useState } from 'react';
 import { WeatherAlert, WeatherTimeRangeType } from '@/types/types';
 import { FiAlertTriangle } from 'react-icons/fi';
-import Modal from 'react-modal';
+// import Modal from 'react-modal';
 import format from 'date-fns/format';
+import { Modal } from './Modal';
 
-const AlertSummary = memo(function WarningSummary({ event }: { event: string }) {
+function parseTimestamp(timestamp: number) {
+  const date = new Date(timestamp * 1000);
+  return format(date, 'HHMM dd/MM/yyyy');
+}
+
+const AlertTimeRange = memo(function AlertTimeRange({ start, end }: WeatherTimeRangeType): ReactElement {
+  const alertRange = `From ${parseTimestamp(start)} to ${parseTimestamp(end)}`;
+  return <p>{alertRange}</p>;
+});
+
+const AlertSummary = memo(function WarningSummary({ event }: { event: string }): ReactElement {
   return (
     <div
       className="
@@ -19,17 +30,18 @@ const AlertSummary = memo(function WarningSummary({ event }: { event: string }) 
   );
 });
 
-function parseTimestamp(timestamp: number) {
-  const date = new Date(timestamp * 1000);
-  return format(date, 'HHMM dd/MM/yyyy');
+function ModalBody({ alert }: { alert: WeatherAlert }): ReactElement {
+  return (
+    <span className="w-full break-word">
+      {/* <AlertSummary event={alert.event} /> */}
+      <AlertTimeRange start={alert.start} end={alert.end} />
+      <p className="self-start">{alert.senderName}</p>
+      <p>{alert.description}</p>
+    </span>
+  );
 }
 
-const AlertTimeRange = memo(function AlertTimeRange({ start, end }: WeatherTimeRangeType) {
-  const alertRange = `From ${parseTimestamp(start)} to ${parseTimestamp(end)}`;
-  return <p>{alertRange}</p>;
-});
-
-export function Alerts({ alerts }: { alerts: WeatherAlert[] }) {
+export function Alerts({ alerts }: { alerts: WeatherAlert[] }): ReactElement {
   const [alertModalOpen, setAlertModalOpen] = useState(false);
 
   function openModal() {
@@ -62,62 +74,11 @@ export function Alerts({ alerts }: { alerts: WeatherAlert[] }) {
         <AlertSummary event={alerts[0].event} />
       </button>
       <Modal
-        ariaHideApp={false}
-        isOpen={alertModalOpen}
-        // onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        // style={customStyles}
-        contentLabel="Example Modal"
-        className="modal"
-      >
-        <div
-          className="
-                rounded-lg 
-                h-full
-                w-full 
-                p-5 
-                flex 
-                flex-col 
-                items-center 
-                justify-between                 
-                outline
-                outline-slate-800
-                outline-1	
-                bg-sky-100
-                "
-        >
-          <span className="w-full break-all">
-            <AlertSummary event={alerts[0].event} />
-            <AlertTimeRange start={alerts[0].start} end={alerts[0].end} />
-            <p className="self-start">{alerts[0].senderName}</p>
-            <p>{alerts[0].description}</p>
-          </span>
-          <button
-            type="button"
-            data-testid="alerts"
-            onClick={closeModal}
-            className={`
-                px-3
-                py-1
-                flex 
-                gap-2 
-                flex-col
-                items-center 
-                justify-between  
-                outline
-                outline-slate-800
-                outline-1
-                rounded-full
-                hover:outline-2        
-                hover:disabled:bg-transparent
-                active:bg-sky-400/30
-                w-max
-            `}
-          >
-            OK
-          </button>
-        </div>
-      </Modal>
+        open={alertModalOpen}
+        onClose={closeModal}
+        title={`${alerts[0].senderName} ${alerts[0].event}`}
+        body={<ModalBody alert={alerts[0]} />}
+      />
     </>
   );
 }

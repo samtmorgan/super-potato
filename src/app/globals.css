@@ -22,24 +22,3 @@ body {
   align-items: center;
   height: 100vh;
 }
-
-.modal {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 50%;
-  height: 50%;
-  margin: auto;
-  background-color: white;
-  border-radius: 0.5rem;
-}
-
-/* Mobile */
-@media (max-width: 700px) {
-  .modal {
-    width: 90%;
-    height: 90%;
-  }
-}

@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { IconType } from 'react-icons';
 
 export interface ICoords {
@@ -56,6 +57,13 @@ export type WeatherAlert = {
 export type WeatherTimeRangeType = {
   start: number;
   end: number;
+};
+
+export type ModalType = {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  body: ReactElement;
 };
 
 export type WeatherIcon =
