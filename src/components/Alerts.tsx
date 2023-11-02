@@ -1,4 +1,4 @@
-import React, { ReactElement, memo, useState } from 'react';
+import React, { ReactElement, memo, useMemo, useState } from 'react';
 import { FiAlertTriangle } from 'react-icons/fi';
 import format from 'date-fns/format';
 import { WeatherAlert, WeatherTimeRangeType } from '../types/types';
@@ -42,8 +42,10 @@ function ModalBody({ alert }: { alert: WeatherAlert }): ReactElement {
 
 export function Alerts({ alerts }: { alerts: WeatherAlert[] }): ReactElement {
   const [alertModalOpen, setAlertModalOpen] = useState(false);
+  const [clickedAlert, setClickedAlert] = useState<number | null>(null);
 
-  function openModal() {
+  function openModal(index: number) {
+    setClickedAlert(index);
     setAlertModalOpen(true);
   }
 
@@ -51,33 +53,41 @@ export function Alerts({ alerts }: { alerts: WeatherAlert[] }): ReactElement {
     setAlertModalOpen(false);
   };
 
+  const alertModalTitle = useMemo(() => {
+    if (clickedAlert === null) return 'There was a problem getting the data';
+    return `${alerts[clickedAlert].senderName} ${alerts[clickedAlert].event}`;
+  }, [clickedAlert, alerts]);
+
+  const alertModalBody = useMemo(() => {
+    if (clickedAlert === null) return <p>There was a problem getting the data</p>;
+    return <ModalBody alert={alerts[clickedAlert]} />;
+  }, [clickedAlert, alerts]);
+
   return (
     <>
-      <button
-        type="button"
-        data-testid="alerts"
-        onClick={openModal}
-        className={`
-        px-3
-        py-1
-        outline
-        outline-slate-800
-        outline-1
-        rounded-full
-        hover:outline-2        
-        hover:disabled:bg-transparent
-        active:bg-sky-400/30
-        m-5
-    `}
-      >
-        <AlertSummary event={alerts[0].event} />
-      </button>
-      <Modal
-        open={alertModalOpen}
-        onClose={closeModal}
-        title={`${alerts[0].senderName} ${alerts[0].event}`}
-        body={<ModalBody alert={alerts[0]} />}
-      />
+      <div className="flex flex-col items-center gap-2  mt-5">
+        {alerts.map((alert, index) => (
+          <button
+            type="button"
+            data-testid="alerts"
+            onClick={() => openModal(index)}
+            className={`
+                px-3
+                py-1
+                outline
+                outline-slate-800
+                outline-1
+                rounded-full
+                hover:outline-2        
+                hover:disabled:bg-transparent
+                active:bg-sky-400/30
+            `}
+          >
+            <AlertSummary event={alert.event} />
+          </button>
+        ))}
+      </div>
+      <Modal open={alertModalOpen} onClose={closeModal} title={alertModalTitle} body={alertModalBody} />
     </>
   );
 }

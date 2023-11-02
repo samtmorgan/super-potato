@@ -37,34 +37,6 @@ describe('PageContent component should render appropriate status dependent the v
     const denied = screen.getByRole('alert', { value: pageContentNavDenied });
     expect(denied).toBeInTheDocument();
   });
-  //   test('Render address', () => {
-  //     const providerProps = {
-  //       value: {
-  //         locationStatus: SUCCESS,
-  //         addressStatus: SUCCESS,
-  //         weatherStatus: SUCCESS,
-  //         address: 'here and now',
-  //         weatherAssets: { current: { iconCode: 'test', temp: 18 } },
-  //       },
-  //     };
-  //     renderWithContext(<PageContent />, { providerProps });
-  //     const address = screen.getByText('here and now');
-  //     expect(address).toBeInTheDocument();
-  //   });
-  //   test('Render temperature', () => {
-  //     const providerProps = {
-  //       value: {
-  //         locationStatus: SUCCESS,
-  //         addressStatus: SUCCESS,
-  //         weatherStatus: SUCCESS,
-  //         address: 'here and now',
-  //         weatherAssets: { current: { iconCode: 'test', temp: 18 } },
-  //       },
-  //     };
-  //     renderWithContext(<PageContent />, { providerProps });
-  //     const address = screen.getByText('18');
-  //     expect(address).toBeInTheDocument();
-  //   });
 });
 
 describe('PageContent includes Alert component if alerts is not null', () => {
@@ -80,48 +52,18 @@ describe('PageContent includes Alert component if alerts is not null', () => {
     const alerts = screen.getByTestId('alerts');
     expect(alerts).toBeInTheDocument();
   });
-  //   test('Error component is shown if locationStatus === ERROR', () => {
-  //     const providerProps = {
-  //       value: { locationStatus: ERROR, setSearchResults: () => {} },
-  //     };
-  //     renderWithContext(<PageContent />, { providerProps });
-  //     const error = screen.getByRole('alert', { value: pageContentError });
-  //     expect(error).toBeInTheDocument();
-  //   });
-  //   test('Error component is shown if locationStatus === DENIED', () => {
-  //     const providerProps = {
-  //       value: { locationStatus: DENIED, setSearchResults: () => {} },
-  //     };
-  //     renderWithContext(<PageContent />, { providerProps });
-  //     const denied = screen.getByRole('alert', { value: pageContentNavDenied });
-  //     expect(denied).toBeInTheDocument();
-  //   });
-  //   //   test('Render address', () => {
-  //   //     const providerProps = {
-  //   //       value: {
-  //   //         locationStatus: SUCCESS,
-  //   //         addressStatus: SUCCESS,
-  //   //         weatherStatus: SUCCESS,
-  //   //         address: 'here and now',
-  //   //         weatherAssets: { current: { iconCode: 'test', temp: 18 } },
-  //   //       },
-  //   //     };
-  //   //     renderWithContext(<PageContent />, { providerProps });
-  //   //     const address = screen.getByText('here and now');
-  //   //     expect(address).toBeInTheDocument();
-  //   //   });
-  //   //   test('Render temperature', () => {
-  //   //     const providerProps = {
-  //   //       value: {
-  //   //         locationStatus: SUCCESS,
-  //   //         addressStatus: SUCCESS,
-  //   //         weatherStatus: SUCCESS,
-  //   //         address: 'here and now',
-  //   //         weatherAssets: { current: { iconCode: 'test', temp: 18 } },
-  //   //       },
-  //   //     };
-  //   //     renderWithContext(<PageContent />, { providerProps });
-  //   //     const address = screen.getByText('18');
-  //   //     expect(address).toBeInTheDocument();
-  //   //   });
+  test('Component renders the multiple alert event text', () => {
+    // setup the context values as if all API requests were successful
+    const providerProps = successProviderProps;
+    // inject our test weather alert event
+    providerProps.value.weatherAssets = {
+      current: providerProps.value.weatherAssets.current,
+      alerts: [{ event: 'yellow rain warning 1' }, { event: 'yellow rain warning 2' }],
+    };
+    renderWithContext(<PageContent />, { providerProps });
+    const alert1 = screen.getByText('yellow rain warning 1');
+    const alert2 = screen.getByText('yellow rain warning 2');
+    expect(alert1).toBeInTheDocument();
+    expect(alert2).toBeInTheDocument();
+  });
 });
