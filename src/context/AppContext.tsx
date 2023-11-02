@@ -41,9 +41,8 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [coords, setCoords] = useState<ICoords | null>(null);
   const [weatherAssets, setWeatherAssets] = useState<Weather | null>(null);
   const [address, setAddress] = useState<string | null>(null);
-  const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null);
+  const [searchResults, setSearchResults] = useState<SearchResult[] | null>([]);
   const [searchValue, setSearchValue] = useState<string>('');
-
   const [weatherStatus, setWeatherStatus] = useState<WeatherStatus>(LOADING);
   const [addressStatus, setAddressStatus] = useState<AddressStatus>(LOADING);
   const [locationStatus, setLocationStatus] = useState<LocationStatus>(LOADING);

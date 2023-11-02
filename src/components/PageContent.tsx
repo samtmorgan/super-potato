@@ -1,11 +1,9 @@
-import React, { ReactElement, useCallback, useMemo } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { DENIED, ERROR, LOADING } from '@/constants/statuses';
 import { ThreeDots } from 'react-loader-spinner';
 import { MdErrorOutline } from 'react-icons/md';
 import { pageContentError, pageContentNavDenied } from '@/constants/copy';
-import { getWeatherForSearchResult } from '@/api/api';
-import { SearchResult } from '@/types/types';
 import { CurrentWeather } from './CurrentWeather';
 import { Location } from './Location';
 import { LocationInput } from './input/LocationInput';
@@ -39,20 +37,7 @@ export const mockAlerts = [
 ];
 
 export function Content(): ReactElement | null {
-  const {
-    locationStatus,
-    addressStatus,
-    weatherStatus,
-    address,
-    weatherAssets,
-    searchResults,
-    setSearchResults,
-    setLocationStatus,
-    setAddress,
-    setWeatherAssets,
-    setWeatherStatus,
-    setSearchValue,
-  } = useAppContext();
+  const { locationStatus, addressStatus, weatherStatus, address, weatherAssets, searchResults } = useAppContext();
   const loading = useMemo(() => {
     return [locationStatus, addressStatus, weatherStatus].includes(LOADING);
   }, [locationStatus, addressStatus, weatherStatus]);
@@ -64,25 +49,6 @@ export function Content(): ReactElement | null {
   const navigatorDenied = useMemo(() => locationStatus === DENIED, [locationStatus]);
 
   const weatherAlerts = useMemo(() => weatherAssets?.alerts, [weatherAssets]);
-  // mocking the alerts for dev
-  //   const weatherAlerts = useMemo(() => mockAlerts, []);
-
-  const handleClickSearchResult = useCallback(
-    (searchResult: SearchResult) => {
-      setSearchValue('');
-      const searchStr = searchResult.text;
-      getWeatherForSearchResult(
-        searchStr,
-        searchResult.type,
-        setAddress,
-        setWeatherAssets,
-        setWeatherStatus,
-        setLocationStatus,
-      );
-      setSearchResults(null);
-    },
-    [setSearchValue, setAddress, setLocationStatus, setSearchResults, setWeatherAssets, setWeatherStatus],
-  );
 
   if (loading) {
     return (
@@ -106,34 +72,9 @@ export function Content(): ReactElement | null {
     return <ErrorComponent text={pageContentNavDenied} />;
   }
 
-  if (searchResults) {
-    return (
-      <menu
-        className="
-      divide-y
-      divide-slate-800"
-      >
-        {searchResults.map(searchResult => (
-          <li
-            className="
-            flex
-            items-center
-            justify-center
-            h-10
-            hover:bg-sky-300/30
-        "
-            key={searchResult.text}
-          >
-            <button onClick={() => handleClickSearchResult(searchResult)} className="w-full h-full" type="button">
-              {searchResult.text}
-            </button>
-          </li>
-        ))}
-      </menu>
-    );
-  }
-
-  if (address && weatherAssets) {
+  // If we have the address and weather assets, but no search results, we can render the page content
+  // If we have search results, we can render the search results instead of the page content
+  if (address && weatherAssets && !searchResults) {
     return (
       <>
         <Location />
@@ -142,7 +83,6 @@ export function Content(): ReactElement | null {
       </>
     );
   }
-  //   console.log({ address, weatherAssets });
   return null;
 }
 

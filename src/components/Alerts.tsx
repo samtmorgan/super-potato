@@ -1,10 +1,10 @@
 import React, { ReactElement, memo, useState } from 'react';
-import { WeatherAlert, WeatherTimeRangeType } from '@/types/types';
 import { FiAlertTriangle } from 'react-icons/fi';
 import format from 'date-fns/format';
+import { WeatherAlert, WeatherTimeRangeType } from '../types/types';
 import { Modal } from './Modal';
 
-function parseTimestamp(timestamp: number) {
+function parseTimestamp(timestamp: number): string {
   const date = new Date(timestamp * 1000);
   return format(date, 'HHMM dd/MM/yyyy');
 }
