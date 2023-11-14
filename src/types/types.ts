@@ -35,6 +35,9 @@ export type Weather = {
     iconCode: WeatherIcon;
     text: string;
   };
+  day: {
+    tempHighLow: string;
+  };
   alerts: WeatherAlert[] | null;
 };
 

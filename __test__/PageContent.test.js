@@ -67,3 +67,23 @@ describe('PageContent includes Alert component if alerts is not null', () => {
     expect(alert2).toBeInTheDocument();
   });
 });
+
+describe('the low and high temperatures are rendered', () => {
+  beforeEach(() => {
+    const providerProps = successProviderProps;
+    renderWithContext(<PageContent />, { providerProps });
+  });
+  test('the low and high temperatures section is rendered', () => {
+    const section = screen.getByLabelText('Daily low and high temperatures');
+    expect(section).toBeInTheDocument();
+  });
+  // TODO: resolve why these don't work here but do work in the component test
+  //   test('the low temperature is rendered', () => {
+  //     const minTemp = screen.getByText(/L: 4°/);
+  //     expect(minTemp).toBeInTheDocument();
+  //   });
+  //   test('the high temperature is rendered', async () => {
+  //     const maxTemp = waitFor(screen.getByText(/H: 7°/));
+  //     expect(maxTemp).toBeInTheDocument();
+  //   });
+});

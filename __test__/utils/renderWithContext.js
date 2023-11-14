@@ -43,6 +43,9 @@ export const successProviderProps = {
         iconCode: '01d',
         text: 'Clear',
       },
+      day: {
+        tempHighLow: `H: 7°\u00A0\u00A0\u00A0\u00A0L: 4°`,
+      },
       alerts: null,
     },
     setWeatherAssets: () => {},

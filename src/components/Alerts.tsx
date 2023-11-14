@@ -68,6 +68,7 @@ export function Alerts({ alerts }: { alerts: WeatherAlert[] }): ReactElement {
       <div className="flex flex-col items-center gap-2  mt-5">
         {alerts.map((alert, index) => (
           <button
+            key={alert.event}
             type="button"
             data-testid="alerts"
             onClick={() => openModal(index)}

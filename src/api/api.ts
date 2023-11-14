@@ -32,12 +32,18 @@ export async function getWeather(
   try {
     const res = await fetch(url);
     const result = await res.json();
+    console.log(result);
     //   build the current weather assets
     const currentAssets: Weather = {
       current: {
         temp: `${result.current.temp.toFixed(0)}°c`,
         iconCode: result.current.weather[0].icon,
         text: result.current.weather[0].description,
+      },
+      day: {
+        tempHighLow: `H: ${result.daily[0].temp.max.toFixed(0)}°
+            \u00A0\u00A0\u00A0\u00A0
+        L: ${result.daily[0].temp.min.toFixed(0)}°`,
       },
       alerts: null,
     };
