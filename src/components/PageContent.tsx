@@ -8,6 +8,7 @@ import { CurrentWeather } from './CurrentWeather';
 import { Location } from './Location';
 import { LocationInput } from './input/LocationInput';
 import { Alerts } from './Alerts';
+import { DayTempRange } from './DayTempRange';
 
 function ErrorComponent({ text }: { text: string }): React.ReactElement {
   return (
@@ -80,6 +81,7 @@ export function Content(): ReactElement | null {
         <Location />
         <CurrentWeather />
         {weatherAlerts && <Alerts alerts={weatherAlerts} />}
+        <DayTempRange />
       </>
     );
   }
