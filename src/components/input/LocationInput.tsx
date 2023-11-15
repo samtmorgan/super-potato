@@ -1,12 +1,12 @@
-import { DENIED, ERROR, LOADING, SUCCESS } from '@/constants/statuses';
-import { useAppContext } from '@/context/AppContext';
 import React, { useCallback, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { Tooltip } from 'react-tooltip';
 import { LiaLocationArrowSolid } from 'react-icons/lia';
 import { AiOutlineClose } from 'react-icons/ai';
-import { v4 as uuidv4 } from 'uuid';
-import { SearchResult, Suggestion } from '@/types/types';
-import { getWeatherForSearchResult } from '@/api/api';
+import { DENIED, ERROR, LOADING, SUCCESS } from '../../constants/statuses';
+import { useAppContext } from '../../context/AppContext';
+import { SearchResult, Suggestion } from '../../types/types';
+import { getWeatherForSearchResult } from '../../api/api';
 
 const sessionId = uuidv4();
 

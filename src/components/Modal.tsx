@@ -1,5 +1,5 @@
-import { ModalType } from '@/types/types';
 import React, { ReactElement } from 'react';
+import { ModalType } from '../types/types';
 
 /*
 Modal code adapted from - 

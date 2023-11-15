@@ -1,6 +1,6 @@
-import { useAppContext } from '@/context/AppContext';
 import React from 'react';
 import { Tooltip } from 'react-tooltip';
+import { useAppContext } from '../context/AppContext';
 
 export function Location() {
   const { address } = useAppContext();

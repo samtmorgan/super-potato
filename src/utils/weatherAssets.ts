@@ -1,4 +1,3 @@
-import { WeatherAssetsStatic, WeatherIcon } from '@/types/types';
 import { IconType } from 'react-icons';
 import {
   WiDaySunny,
@@ -20,6 +19,7 @@ import {
   WiDayShowers,
   WiNightCloudy,
 } from 'react-icons/wi';
+import { WeatherAssetsStatic, WeatherIcon } from '../types/types';
 
 export const weatherIcons = {
   '01d': WiDaySunny,

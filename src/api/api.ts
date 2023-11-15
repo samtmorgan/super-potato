@@ -1,4 +1,4 @@
-import { ERROR, SUCCESS } from '@/constants/statuses';
+import { ERROR, SUCCESS } from '../constants/statuses';
 import {
   AddressStatus,
   ApiStatus,
@@ -45,6 +45,7 @@ export async function getWeather(
             \u00A0\u00A0\u00A0\u00A0
         L: ${result.daily[0].temp.min.toFixed(0)}°`,
       },
+      hourPrecipitation: result.minutely,
       alerts: null,
     };
     //   if we have alerts add them to the context

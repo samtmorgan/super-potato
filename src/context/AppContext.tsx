@@ -1,4 +1,5 @@
-import { LOADING } from '@/constants/statuses';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { LOADING } from '../constants/statuses';
 import {
   AddressStatus,
   IContextType,
@@ -7,8 +8,7 @@ import {
   SearchResult,
   Weather,
   WeatherStatus,
-} from '@/types/types';
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+} from '../types/types';
 import { getIpGeo, getReverseGeocode, getWeather } from '../api/api';
 
 const AppContext = createContext<IContextType>({
