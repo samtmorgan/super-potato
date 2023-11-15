@@ -71,7 +71,7 @@ export function HourPrecipitation() {
       <BarChart aria-label="precipitation chart" width={250} height={70} data={data}>
         <CartesianGrid
           stroke="#999"
-          strokeDasharray="3, 3"
+          strokeDasharray="2, 2"
           vertical={false}
           horizontalCoordinatesGenerator={({ yAxis }) => {
             const factor = yAxis.height / yAxis.domain.at(-1);
