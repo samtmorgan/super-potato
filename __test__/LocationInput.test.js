@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { DENIED, LOADING } from '@/constants/statuses';
+import { DENIED, LOADING } from '../src/constants/statuses';
 import { LocationInput } from '../src/components/input/LocationInput';
 import '@testing-library/jest-dom';
 import { renderComponent } from './utils/renderComponent';
