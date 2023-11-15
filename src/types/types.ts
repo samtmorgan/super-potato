@@ -38,6 +38,12 @@ export type Weather = {
   day: {
     tempHighLow: string;
   };
+  hourPrecipitation:
+    | {
+        precipitation: number;
+        dt: number;
+      }[]
+    | null;
   alerts: WeatherAlert[] | null;
 };
 
@@ -116,3 +122,5 @@ export type apiRequest<DataType> = {
   setState: (data: DataType) => void;
   setStatus: (status: ApiStatus) => void;
 };
+
+export type TickPropType = { x: number; y: number; payload: { value: number } };

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { useAppContext } from '@/context/AppContext';
-import { resolveWeatherIcon } from '@/utils/weatherAssets';
+import { useAppContext } from '../context/AppContext';
+import { resolveWeatherIcon } from '../utils/weatherAssets';
 
 export function CurrentWeather() {
   const { weatherAssets } = useAppContext();

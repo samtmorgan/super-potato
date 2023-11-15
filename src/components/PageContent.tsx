@@ -1,14 +1,15 @@
 import React, { ReactElement, useMemo } from 'react';
-import { useAppContext } from '@/context/AppContext';
-import { DENIED, ERROR, LOADING } from '@/constants/statuses';
 import { ThreeDots } from 'react-loader-spinner';
 import { MdErrorOutline } from 'react-icons/md';
-import { pageContentError, pageContentNavDenied } from '@/constants/copy';
+import { useAppContext } from '../context/AppContext';
+import { DENIED, ERROR, LOADING } from '../constants/statuses';
+import { pageContentError, pageContentNavDenied } from '../constants/copy';
 import { CurrentWeather } from './CurrentWeather';
 import { Location } from './Location';
 import { LocationInput } from './input/LocationInput';
 import { Alerts } from './Alerts';
 import { DayTempRange } from './DayTempRange';
+import { HourPrecipitation } from './HourPrecipitation';
 
 function ErrorComponent({ text }: { text: string }): React.ReactElement {
   return (
@@ -82,6 +83,7 @@ export function Content(): ReactElement | null {
         <CurrentWeather />
         {weatherAlerts && <Alerts alerts={weatherAlerts} />}
         <DayTempRange />
+        <HourPrecipitation />
       </>
     );
   }
